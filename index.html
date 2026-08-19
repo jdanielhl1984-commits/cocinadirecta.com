@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulos de cocina de fábrica, sin intermediarios de más</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C1B19;
+    --paper:#F7F5F0;
+    --paper-dim:#EFEBE2;
+    --brass:#B08D57;
+    --brass-dark:#8A6C3F;
+    --line: rgba(28,27,25,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,245,240,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;}
+  .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
+  .logo span{color:var(--brass-dark);}
+  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:500;}
+  .nav-links a{opacity:0.75;transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    border:1px solid var(--ink);border-radius:2px;
+    padding:9px 18px;font-size:13px;font-weight:600;
+  }
+
+  /* Hero */
+  .hero{padding:96px 0 80px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+  .eyebrow{
+    font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--brass-dark);font-weight:600;margin-bottom:20px;
+  }
+  .hero h1{font-size:clamp(34px,4.2vw,54px);line-height:1.08;margin-bottom:24px;}
+  .hero p.lede{font-size:18px;color:rgba(28,27,25,0.75);max-width:46ch;margin-bottom:36px;}
+  .hero-actions{display:flex;gap:16px;align-items:center;}
+  .btn-primary{
+    background:var(--ink);color:var(--paper);
+    padding:15px 28px;border-radius:2px;font-size:15px;font-weight:600;
+    display:inline-block;transition:transform .15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-ghost{font-size:14px;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:2px;}
+
+  /* Signature diagram: casco + frente + herrajes = referencia */
+  .ref-diagram{
+    background:var(--paper-dim);border:1px solid var(--line);border-radius:4px;
+    padding:32px;
+  }
+  .ref-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px;}
+  .ref-piece{
+    flex:1;background:var(--paper);border:1px solid var(--line);border-radius:3px;
+    padding:18px 12px;text-align:center;
+  }
+  .ref-piece .n{font-family:'Fraunces',serif;font-size:15px;margin-bottom:4px;}
+  .ref-piece .d{font-size:12px;color:rgba(28,27,25,0.6);}
+  .ref-plus{font-size:20px;color:var(--brass-dark);font-weight:600;}
+  .ref-equals{
+    text-align:center;padding-top:18px;border-top:1px dashed var(--line);
+  }
+  .ref-equals .n{font-family:'Fraunces',serif;font-size:17px;color:var(--brass-dark);}
+  .ref-equals .d{font-size:12px;color:rgba(28,27,25,0.6);margin-top:2px;}
+
+  /* Section shared */
+  section{padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head h2{font-size:32px;margin-bottom:14px;}
+  .section-head p{color:rgba(28,27,25,0.7);font-size:16px;}
+
+  /* Flujo de compra — aquí sí es una secuencia real */
+  .flow-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .flow-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+  .flow-step{
+    padding:44px 40px;border-right:1px solid var(--line);
+  }
+  .flow-step:last-child{border-right:none;}
+  .flow-step .step-n{
+    font-family:'Fraunces',serif;font-size:13px;color:var(--brass-dark);
+    margin-bottom:14px;
+  }
+  .flow-step h3{font-size:19px;margin-bottom:10px;}
+  .flow-step p{font-size:14.5px;color:rgba(28,27,25,0.68);}
+
+  /* Público dual */
+  .audience-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .quality-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .audience-card{
+    border:1px solid var(--line);border-radius:4px;padding:40px;
+    background:var(--paper);
+  }
+  .audience-card.pro{background:var(--ink);color:var(--paper);}
+  .audience-card h3{font-size:22px;margin-bottom:12px;}
+  .audience-card.pro h3{color:var(--paper);}
+  .audience-card p{font-size:14.5px;color:rgba(28,27,25,0.7);margin-bottom:20px;}
+  .audience-card.pro p{color:rgba(247,245,240,0.72);}
+  .tag{
+    display:inline-block;font-size:12px;font-weight:600;
+    border:1px solid currentColor;border-radius:2px;padding:5px 10px;margin-top:4px;
+  }
+
+  /* Plazo aviso */
+  .notice{
+    background:var(--paper-dim);border:1px solid var(--line);border-radius:4px;
+    padding:28px 32px;display:flex;gap:20px;align-items:flex-start;
+  }
+  .notice .mark{
+    font-family:'Fraunces',serif;font-size:22px;color:var(--brass-dark);flex-shrink:0;
+  }
+  .notice p{font-size:14.5px;color:rgba(28,27,25,0.75);}
+  .notice strong{color:var(--ink);}
+
+  footer{border-top:1px solid var(--line);padding:48px 0;font-size:13px;color:rgba(28,27,25,0.55);}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .flow-grid{grid-template-columns:1fr;}
+    .flow-step{border-right:none;border-bottom:1px solid var(--line);}
+    .audience-grid{grid-template-columns:1fr;}
+    .quality-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+  }
+  :focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">Cocina<span>Directa</span></a>
+    <nav class="nav-links">
+      <a href="catalogo.html">Catálogo</a>
+      <a href="#flujo">Cómo funciona</a>
+      <a href="#calidad">Calidad</a>
+      <a href="diseno-3d.html">Diseño 3D</a>
+    </nav>
+    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Directo de fábrica</div>
+      <h1>La cocina que se adapta a cómo vives, con la calidad de las grandes marcas.</h1>
+      <p class="lede">Elige los módulos que necesitas, ya completos con puertas y herrajes. Decide si los quieres montados o para montar tú mismo. Te llegan a la obra o a casa.</p>
+      <div class="hero-actions">
+        <a href="catalogo.html" class="btn-primary">Explorar módulos</a>
+        <a href="#flujo" class="btn-ghost">Ver cómo funciona</a>
+      </div>
+    </div>
+    <div class="ref-diagram">
+      <div class="ref-row">
+        <div class="ref-piece"><div class="n">Casco</div><div class="d">19mm de grosor</div></div>
+        <div class="ref-plus">+</div>
+        <div class="ref-piece"><div class="n">Frente</div><div class="d">Acabado a elegir</div></div>
+        <div class="ref-plus">+</div>
+        <div class="ref-piece"><div class="n">Herrajes</div><div class="d">Bisagras y guías</div></div>
+      </div>
+      <div class="ref-equals">
+        <div class="n">Todo incluido en un solo precio</div>
+        <div class="d">No hay que comprar cada pieza por separado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flow-strip" id="flujo">
+  <div class="wrap flow-grid">
+    <div class="flow-step">
+      <div class="step-n">Paso uno</div>
+      <h3>Elige tus módulos</h3>
+      <p>Añade al carrito los módulos que necesitas del catálogo, con precio cerrado desde el primer momento.</p>
+    </div>
+    <div class="flow-step">
+      <div class="step-n">Paso dos</div>
+      <h3>Elige cómo lo recibes</h3>
+      <p>Paletizado en caja para montar tú mismo, o ya montado de fábrica si prefieres ahorrarte horas de obra. Tú eliges antes de pagar.</p>
+    </div>
+    <div class="flow-step">
+      <div class="step-n">Paso tres</div>
+      <h3>Recíbelo en obra</h3>
+      <p>Fabricación bajo pedido en nuestra fábrica asociada. Plazo estimado de 60 días desde la confirmación del pago.</p>
+    </div>
+  </div>
+</section>
+
+<section id="profesionales">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Venta directa de módulos, sin intermediarios</h2>
+      <p>El mismo catálogo, dos formas de recibir cada módulo.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>Particulares</h3>
+        <p>Calidad de fábrica al precio de venta directa. Recibe cada módulo paletizado en caja, listo para que tú o tu instalador lo coloquéis en la cocina.</p>
+        <span class="tag">Módulo en caja</span>
+      </div>
+      <div class="audience-card pro">
+        <h3>Profesionales</h3>
+        <p>Paletas, lampistas y reformistas: pide el módulo ya ensamblado de fábrica como pieza y ahórrate el tiempo de montaje en obra. La colocación final en la cocina sigue corriendo de tu parte.</p>
+        <span class="tag">Módulo ensamblado</span>
+      </div>
+    </div>
+    <div class="notice" style="margin-top:24px;">
+      <div class="mark">i</div>
+      <p><strong>¿Dudas de medidas o un proyecto a medida?</strong> Vendemos módulos, no el servicio de instalación. Si necesitas ayuda con cotas, cantidades o un proyecto personalizado, <a href="diseno-3d.html" style="text-decoration:underline;">consulta con nuestros expertos</a> antes de pedir presupuesto.</p>
+    </div>
+  </div>
+</section>
+
+<section id="calidad">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Calidad que se puede comprobar, no solo prometer</h2>
+      <p>Estos son los materiales y herrajes reales con los que se fabrica cada módulo.</p>
+    </div>
+    <div class="quality-grid">
+      <div class="audience-card">
+        <h3>Puerta Venecia</h3>
+        <p>22mm de grosor, más gruesa que el laminado estándar. Cantos ABS microbiselados y tirador integrado, sin piezas sueltas que se enganchen. Acabado antihuellas, resistente al calor, a los químicos y al impacto.</p>
+        <span class="tag">Modelo más solicitado</span>
+      </div>
+      <div class="audience-card">
+        <h3>Estructura del módulo</h3>
+        <p>Paneles de 19mm de grosor, el mismo estándar que usan las marcas de gama alta. Costados de 16mm y cantos vistos en ABS de 1mm, resistentes a golpes y humedad. Baja emisión de formaldehído, con certificación TSCA CARB2.</p>
+        <span class="tag">Fabricación certificada</span>
+      </div>
+      <div class="audience-card">
+        <h3>Herrajes de marca</h3>
+        <p>Bisagras Blum Blumotion de cierre suave, cajones Blum MERIVOBOX o Grass NOVA PRO con guías de hasta 40kg de carga. Colgadores con sistema antivuelco, probados con 260kg de carga sostenida durante una semana.</p>
+        <span class="tag">Blum · Grass</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="notice">
+      <div class="mark">i</div>
+      <p><strong>Fabricación bajo pedido — plazo de aproximadamente 60 días.</strong> No mantenemos stock genérico: cada pedido se produce específicamente para ti en nuestra fábrica asociada, y por eso el plazo se indica de forma clara antes de confirmar el pago, no en la letra pequeña.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © 2026 CocinaDirecta. Venta directa de módulos de cocina, puertas y accesorios.
+  </div>
+</footer>
+
+</body>
+</html>
