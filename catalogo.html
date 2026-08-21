@@ -46,8 +46,27 @@
   .filter-option input{accent-color:var(--brass-dark);}
   .filter-option.active-cat{font-weight:600;color:var(--ink);}
 
+  .btn-limpiar{
+    margin-top:12px;
+    padding:8px 16px;
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    width:100%;
+    text-align:center;
+  }
+  .btn-limpiar:hover{
+    background:var(--ink);
+    color:var(--paper);
+  }
+
   .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;color:rgba(28,27,25,0.6);flex-wrap:wrap;gap:10px;}
   .toolbar select{padding:4px 8px;border:1px solid var(--line);border-radius:2px;background:var(--paper);font-size:13px;color:var(--ink);}
+  .filtros-activos{font-size:12px;color:var(--brass-dark);}
 
   .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .card{
@@ -156,6 +175,7 @@
           <input type="checkbox"> Sobreencimeras
         </label>
       </div>
+
       <div class="filter-group">
         <h3>Acabado puerta</h3>
         <label class="filter-option" data-acabado="Venecia PET Blanco Mate">
@@ -171,6 +191,7 @@
           <input type="checkbox"> Madera
         </label>
       </div>
+
       <div class="filter-group">
         <h3>Ancho (cm)</h3>
         <label class="filter-option" data-medida="30">
@@ -206,7 +227,12 @@
         <label class="filter-option" data-medida="120">
           <input type="checkbox"> 120
         </label>
+        <!-- Botón para limpiar filtros de ancho -->
+        <button class="btn-limpiar" id="limpiarAnchos">✕ Limpiar filtros de ancho</button>
       </div>
+
+      <!-- Botón para limpiar TODOS los filtros -->
+      <button class="btn-limpiar" id="limpiarTodo" style="margin-top:8px;">✕ Limpiar todos los filtros</button>
     </aside>
 
     <main>
@@ -269,7 +295,7 @@
   let todosLosModulos = [];
   let filtroTipoActual = 'bajo';
   let filtroAcabadoActual = 'Venecia PET Blanco Mate';
-  let filtroMedidaActual = null;
+  let filtroMedidasActuales = []; // Array de medidas seleccionadas
   let ordenActual = 'ancho_asc';
 
   // Función para ordenar
@@ -372,9 +398,9 @@
       filtrados = filtrados.filter(m => m.acabado_puerta === filtroAcabadoActual);
     }
 
-    // Filtrar por medida individual
-    if (filtroMedidaActual) {
-      filtrados = filtrados.filter(m => m.ancho_cm === parseInt(filtroMedidaActual));
+    // Filtrar por medidas (múltiple)
+    if (filtroMedidasActuales.length > 0) {
+      filtrados = filtrados.filter(m => filtroMedidasActuales.includes(m.ancho_cm.toString()));
     }
 
     // Ordenar
@@ -383,7 +409,9 @@
     pintarModulos(filtrados);
   }
 
-  // Event listeners para los checkboxes de tipo
+  // --- EVENT LISTENERS ---
+
+  // Tipo de módulo (selección única)
   document.querySelectorAll('.filter-option[data-tipo]').forEach(label => {
     const checkbox = label.querySelector('input[type="checkbox"]');
     checkbox.addEventListener('change', function(e) {
@@ -411,7 +439,7 @@
     });
   });
 
-  // Event listeners para los checkboxes de acabado
+  // Acabado (selección única)
   document.querySelectorAll('.filter-option[data-acabado]').forEach(label => {
     const checkbox = label.querySelector('input[type="checkbox"]');
     checkbox.addEventListener('change', function(e) {
@@ -431,24 +459,68 @@
     });
   });
 
-  // Event listeners para los checkboxes de medida individual
+  // Ancho (selección múltiple)
   document.querySelectorAll('.filter-option[data-medida]').forEach(label => {
     const checkbox = label.querySelector('input[type="checkbox"]');
     checkbox.addEventListener('change', function(e) {
-      // Desmarcar los demás
-      document.querySelectorAll('.filter-option[data-medida]').forEach(lbl => {
-        if (lbl !== label) {
-          lbl.querySelector('input[type="checkbox"]').checked = false;
-        }
-      });
-
+      const medida = label.dataset.medida;
       if (this.checked) {
-        filtroMedidaActual = label.dataset.medida;
+        if (!filtroMedidasActuales.includes(medida)) {
+          filtroMedidasActuales.push(medida);
+        }
       } else {
-        filtroMedidaActual = null;
+        filtroMedidasActuales = filtroMedidasActuales.filter(m => m !== medida);
       }
       aplicarFiltrosYOrden();
     });
+  });
+
+  // Botón limpiar filtros de ancho
+  document.getElementById('limpiarAnchos').addEventListener('click', function() {
+    document.querySelectorAll('.filter-option[data-medida] input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    filtroMedidasActuales = [];
+    aplicarFiltrosYOrden();
+  });
+
+  // Botón limpiar TODOS los filtros
+  document.getElementById('limpiarTodo').addEventListener('click', function() {
+    // Resetear tipo
+    document.querySelectorAll('.filter-option[data-tipo]').forEach(lbl => {
+      lbl.querySelector('input[type="checkbox"]').checked = false;
+      lbl.classList.remove('active-cat');
+    });
+    // Marcar "Bajos" por defecto
+    const bajoLabel = document.querySelector('.filter-option[data-tipo="bajo"]');
+    if (bajoLabel) {
+      bajoLabel.querySelector('input[type="checkbox"]').checked = true;
+      bajoLabel.classList.add('active-cat');
+      filtroTipoActual = 'bajo';
+    } else {
+      filtroTipoActual = null;
+    }
+
+    // Resetear acabado
+    document.querySelectorAll('.filter-option[data-acabado]').forEach(lbl => {
+      lbl.querySelector('input[type="checkbox"]').checked = false;
+    });
+    // Marcar "Venecia PET" por defecto
+    const veneciaLabel = document.querySelector('.filter-option[data-acabado="Venecia PET Blanco Mate"]');
+    if (veneciaLabel) {
+      veneciaLabel.querySelector('input[type="checkbox"]').checked = true;
+      filtroAcabadoActual = 'Venecia PET Blanco Mate';
+    } else {
+      filtroAcabadoActual = null;
+    }
+
+    // Resetear medidas de ancho
+    document.querySelectorAll('.filter-option[data-medida] input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    filtroMedidasActuales = [];
+
+    aplicarFiltrosYOrden();
   });
 
   // Event listener para el selector de orden
