@@ -333,19 +333,7 @@
     aplicarFiltrosYOrden();
   }
 
-  function aplicarFiltrosYOrden() {
-    let filtrados = todosLosModulos;
-
-    // Filtrar por tipo
-    if (filtroTipoActual) {
-      filtrados = filtrados.filter(m => m.tipo === filtroTipoActual);
-    }
-
-    // Ordenar
-    filtrados = ordenarModulos(filtrados, ordenActual);
-
-    pintarModulos(filtrados);
-  }
+  
 
   // Event listeners para los checkboxes de tipo
   document.querySelectorAll('.filter-option[data-tipo]').forEach(label => {
