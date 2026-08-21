@@ -157,32 +157,32 @@
         </label>
       </div>
       <div class="filter-group">
-  <h3>Acabado puerta</h3>
-  <label class="filter-option" data-acabado="Venecia PET Blanco Mate">
-    <input type="checkbox" checked> Venecia PET
-  </label>
-  <label class="filter-option" data-acabado="Laminado">
-    <input type="checkbox"> Laminado
-  </label>
-  <label class="filter-option" data-acabado="Laca">
-    <input type="checkbox"> Laca
-  </label>
-  <label class="filter-option" data-acabado="Madera">
-    <input type="checkbox"> Madera
-  </label>
-</div>
-<div class="filter-group">
-  <h3>Ancho</h3>
-  <label class="filter-option" data-rango="30-45">
-    <input type="checkbox"> 30–45 cm
-  </label>
-  <label class="filter-option" data-rango="50-60">
-    <input type="checkbox"> 50–60 cm
-  </label>
-  <label class="filter-option" data-rango="80-100">
-    <input type="checkbox"> 80–100 cm
-  </label>
-</div>
+        <h3>Acabado puerta</h3>
+        <label class="filter-option" data-acabado="Venecia PET Blanco Mate">
+          <input type="checkbox" checked> Venecia PET
+        </label>
+        <label class="filter-option" data-acabado="Laminado">
+          <input type="checkbox"> Laminado
+        </label>
+        <label class="filter-option" data-acabado="Laca">
+          <input type="checkbox"> Laca
+        </label>
+        <label class="filter-option" data-acabado="Madera">
+          <input type="checkbox"> Madera
+        </label>
+      </div>
+      <div class="filter-group">
+        <h3>Ancho</h3>
+        <label class="filter-option" data-rango="30-45">
+          <input type="checkbox"> 30–45 cm
+        </label>
+        <label class="filter-option" data-rango="50-60">
+          <input type="checkbox"> 50–60 cm
+        </label>
+        <label class="filter-option" data-rango="80-100">
+          <input type="checkbox"> 80–100 cm
+        </label>
+      </div>
     </aside>
 
     <main>
@@ -243,7 +243,9 @@
 
   // Variables globales
   let todosLosModulos = [];
-  let filtroTipoActual = 'bajo'; // por defecto mostramos bajos
+  let filtroTipoActual = 'bajo';
+  let filtroAcabadoActual = 'Venecia PET Blanco Mate';
+  let filtroRangoActual = null;
   let ordenActual = 'ancho_asc';
 
   // Función para ordenar
@@ -316,7 +318,33 @@
     });
   }
 
-  // Función principal para cargar y aplicar filtros/orden
+  // Función principal que aplica filtros y orden
+  function aplicarFiltrosYOrden() {
+    let filtrados = todosLosModulos;
+
+    // Filtrar por tipo
+    if (filtroTipoActual) {
+      filtrados = filtrados.filter(m => m.tipo === filtroTipoActual);
+    }
+
+    // Filtrar por acabado
+    if (filtroAcabadoActual) {
+      filtrados = filtrados.filter(m => m.acabado_puerta === filtroAcabadoActual);
+    }
+
+    // Filtrar por rango de ancho
+    if (filtroRangoActual) {
+      const [min, max] = filtroRangoActual.split('-').map(Number);
+      filtrados = filtrados.filter(m => m.ancho_cm >= min && m.ancho_cm <= max);
+    }
+
+    // Ordenar
+    filtrados = ordenarModulos(filtrados, ordenActual);
+
+    pintarModulos(filtrados);
+  }
+
+  // Cargar datos desde Supabase
   async function cargarCatalogo() {
     const { data, error } = await supabase
       .from('modulos')
@@ -333,13 +361,10 @@
     aplicarFiltrosYOrden();
   }
 
-  
-
   // Event listeners para los checkboxes de tipo
   document.querySelectorAll('.filter-option[data-tipo]').forEach(label => {
     const checkbox = label.querySelector('input[type="checkbox"]');
     checkbox.addEventListener('change', function(e) {
-      // Desmarcar los demás
       document.querySelectorAll('.filter-option[data-tipo]').forEach(lbl => {
         if (lbl !== label) {
           lbl.querySelector('input[type="checkbox"]').checked = false;
@@ -352,15 +377,53 @@
         filtroTipoActual = label.dataset.tipo;
       } else {
         label.classList.remove('active-cat');
-        // Si se desmarca todo, mostrar todos los tipos
         const algunoChecked = document.querySelector('.filter-option[data-tipo] input[type="checkbox"]:checked');
         if (!algunoChecked) {
           filtroTipoActual = null;
         } else {
-          // Si hay otro marcado, usar ese
           const checkedLabel = document.querySelector('.filter-option[data-tipo].active-cat');
           filtroTipoActual = checkedLabel ? checkedLabel.dataset.tipo : null;
         }
+      }
+      aplicarFiltrosYOrden();
+    });
+  });
+
+  // Event listeners para los checkboxes de acabado
+  document.querySelectorAll('.filter-option[data-acabado]').forEach(label => {
+    const checkbox = label.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', function(e) {
+      document.querySelectorAll('.filter-option[data-acabado]').forEach(lbl => {
+        if (lbl !== label) {
+          lbl.querySelector('input[type="checkbox"]').checked = false;
+        }
+      });
+
+      if (this.checked) {
+        filtroAcabadoActual = label.dataset.acabado;
+      } else {
+        const algunoChecked = document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked');
+        filtroAcabadoActual = algunoChecked ? document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked').closest('.filter-option').dataset.acabado : null;
+      }
+      aplicarFiltrosYOrden();
+    });
+  });
+
+  // Event listeners para los checkboxes de rango de ancho
+  document.querySelectorAll('.filter-option[data-rango]').forEach(label => {
+    const checkbox = label.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', function(e) {
+      document.querySelectorAll('.filter-option[data-rango]').forEach(lbl => {
+        if (lbl !== label) {
+          lbl.querySelector('input[type="checkbox"]').checked = false;
+        }
+      });
+
+      if (this.checked) {
+        filtroRangoActual = label.dataset.rango;
+      } else {
+        const algunoChecked = document.querySelector('.filter-option[data-rango] input[type="checkbox"]:checked');
+        filtroRangoActual = algunoChecked ? document.querySelector('.filter-option[data-rango] input[type="checkbox"]:checked').closest('.filter-option').dataset.rango : null;
       }
       aplicarFiltrosYOrden();
     });
@@ -371,78 +434,7 @@
     ordenActual = this.value;
     aplicarFiltrosYOrden();
   });
-// Variables para filtros adicionales
-let filtroAcabadoActual = 'Venecia PET Blanco Mate'; // por defecto
-let filtroRangoActual = null; // null = todos
 
-// Event listeners para los checkboxes de acabado
-document.querySelectorAll('.filter-option[data-acabado]').forEach(label => {
-  const checkbox = label.querySelector('input[type="checkbox"]');
-  checkbox.addEventListener('change', function(e) {
-    // Desmarcar los demás acabados
-    document.querySelectorAll('.filter-option[data-acabado]').forEach(lbl => {
-      if (lbl !== label) {
-        lbl.querySelector('input[type="checkbox"]').checked = false;
-      }
-    });
-
-    if (this.checked) {
-      filtroAcabadoActual = label.dataset.acabado;
-    } else {
-      // Si se desmarca todo, mostrar todos los acabados
-      const algunoChecked = document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked');
-      filtroAcabadoActual = algunoChecked ? document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked').closest('.filter-option').dataset.acabado : null;
-    }
-    aplicarFiltrosYOrden();
-  });
-});
-
-// Event listeners para los checkboxes de rango de ancho
-document.querySelectorAll('.filter-option[data-rango]').forEach(label => {
-  const checkbox = label.querySelector('input[type="checkbox"]');
-  checkbox.addEventListener('change', function(e) {
-    // Desmarcar los demás rangos
-    document.querySelectorAll('.filter-option[data-rango]').forEach(lbl => {
-      if (lbl !== label) {
-        lbl.querySelector('input[type="checkbox"]').checked = false;
-      }
-    });
-
-    if (this.checked) {
-      filtroRangoActual = label.dataset.rango;
-    } else {
-      const algunoChecked = document.querySelector('.filter-option[data-rango] input[type="checkbox"]:checked');
-      filtroRangoActual = algunoChecked ? document.querySelector('.filter-option[data-rango] input[type="checkbox"]:checked').closest('.filter-option').dataset.rango : null;
-    }
-    aplicarFiltrosYOrden();
-  });
-});
-
-// Modificar la función aplicarFiltrosYOrden para incluir acabado y rango
-function aplicarFiltrosYOrden() {
-  let filtrados = todosLosModulos;
-
-  // Filtrar por tipo
-  if (filtroTipoActual) {
-    filtrados = filtrados.filter(m => m.tipo === filtroTipoActual);
-  }
-
-  // Filtrar por acabado
-  if (filtroAcabadoActual) {
-    filtrados = filtrados.filter(m => m.acabado_puerta === filtroAcabadoActual);
-  }
-
-  // Filtrar por rango de ancho
-  if (filtroRangoActual) {
-    const [min, max] = filtroRangoActual.split('-').map(Number);
-    filtrados = filtrados.filter(m => m.ancho_cm >= min && m.ancho_cm <= max);
-  }
-
-  // Ordenar
-  filtrados = ordenarModulos(filtrados, ordenActual);
-
-  pintarModulos(filtrados);
-}
   // Iniciar
   document.addEventListener('DOMContentLoaded', cargarCatalogo);
 </script>
