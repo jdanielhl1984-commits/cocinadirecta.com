@@ -3,7 +3,7 @@
 ## Modelo de negocio
 
 - **Propuesta de valor:** venta de módulos de cocina de alta calidad (particulares y profesionales — paletas, lampistas) como intermediario con fábrica.
-- **Margen comercial:** 45% de descuento/beneficio sobre PVP.
+- **Margen comercial:** 45% de descuento/beneficio sobre PVP, este margen nunca lo debe ver el cliente porque es nuestra ganancia y nunca se debe descontar del precio final de la web ni ningún precio, es mas bien informativo internamente. *(Actualmente se muestran precios G06 sin margen)*
 - **Fábrica:** Logisiete. Plazo de fabricación: ~60 días (debe mostrarse de forma visible en el checkout, no solo en condiciones legales).
 - **Formatos de entrega:**
   - Paletizado en caja — estándar, sin recargo. El cliente o su instalador lo monta.
@@ -44,7 +44,7 @@
 
 ## Datos técnicos del proveedor (para catálogo y ficha de producto)
 
-- **⭐ Argumento de venta clave: paneles de 19mm.** La mayoría de módulos económicos del mercado son de 16mm. Este dato debe tenerse en cuetna como comparación (no solo como ficha técnica) en home, catálogo y fichas de producto — es el diferenciador más fuerte frente a la competencia barata.
+- **⭐ Argumento de venta clave: paneles de 19mm.** La mayoría de módulos económicos del mercado son de 16mm. Este dato debe tenerse en cuenta como comparación (no solo como ficha técnica) en home, catálogo y fichas de producto — es el diferenciador más fuerte frente a la competencia barata.
 
 - ⭐ Argumento de venta clave: paneles de 19mm. Destacar la robustez de los 19 mm como estándar propio de alta gama, usando afirmaciones categóricas sobre nuestro producto (ej. "Estructura reforzada con paneles de 19 mm para máxima resistencia y cero pandeo") SIN mencionar directamente a marcas competidoras ni generalizar sobre el resto del mercado para evitar problemas de publicidad desleal.
 
@@ -56,9 +56,47 @@
 ## Base de datos (Supabase)
 
 - Proyecto Supabase separado del de abrozon.
-- **Tabla `modulos` creada** con columnas: `id`, `created_at`, `nombre`, `tipo`, `precio_base` (a revisar — el precio real depende de combinación estructura+puerta, no es un valor único), `alto_cm`, `ancho_cm`, `fondo_cm` (pendiente de pasar a mm para coincidir con el estándar de Logisiete), `acabado_puerta`, `colores_disponibles` (array), `destacado` (bool). Primera fila de prueba insertada: "Bajo 1 puerta 60cm".
+- **Tabla `modulos`** con columnas: `id`, `created_at`, `nombre`, `tipo`, `precio_base` (DECIMAL(10,2)), `alto_cm`, `ancho_cm`, `fondo_cm`, `acabado_puerta`, `grosor_puerta_mm`, `destacado` (bool).
+- **Estado actual:** 23 módulos insertados con precios G06 (Venecia PET Blanco Mate).
 - **Pendiente:** rediseñar el modelo de precios como tabla relacionada (`modulos` + tabla `precios` por combinación de módulo × color de estructura × color de puerta), en vez de un campo `precio_base` único — decisión ya tomada, falta implementar.
-- **Convención de medidas:** alto × ancho × fondo, en mm (formato de Logisiete), no cm.
+- **Convención de medidas:** alto × ancho × fondo, en cm (pendiente de pasar a mm para coincidir con el estándar de Logisiete).
+
+### Módulos actuales en base de datos:
+
+**Bajos 1 puerta (80cm altura):** 30, 35, 40, 45, 50, 60, 80cm  
+**Bajos 2 puertas (80cm altura):** 70, 80, 90, 100, 120cm  
+**Altos 1 puerta (70cm altura):** 30, 35, 40, 45, 50, 60cm  
+**Altos 2 puertas (70cm altura):** 70, 80, 90, 100, 120cm  
+
+**Total: 23 módulos**
+
+### Precios G06 de referencia (Venecia PET Blanco Mate):
+
+| Módulo | Precio G06 |
+|--------|-----------|
+| Bajo 1 puerta 30cm | 137,12 € |
+| Bajo 1 puerta 35cm | 148,13 € |
+| Bajo 1 puerta 40cm | 159,12 € |
+| Bajo 1 puerta 45cm | 170,14 € |
+| Bajo 1 puerta 50cm | 181,15 € |
+| Bajo 1 puerta 60cm | 203,17 € |
+| Bajo 1 puerta 80cm | 186,04 € |
+| Bajo 2 puertas 70cm | 258,72 € |
+| Bajo 2 puertas 80cm | 280,77 € |
+| Bajo 2 puertas 90cm | 302,77 € |
+| Bajo 2 puertas 100cm | 326,36 € |
+| Bajo 2 puertas 120cm | 370,40 € |
+| Alto 1 puerta 30cm | 145,97 € |
+| Alto 1 puerta 35cm | 151,53 € |
+| Alto 1 puerta 40cm | 156,48 € |
+| Alto 1 puerta 45cm | 161,53 € |
+| Alto 1 puerta 50cm | 166,87 € |
+| Alto 1 puerta 60cm | 198,57 € |
+| Alto 2 puertas 70cm | 194,79 € |
+| Alto 2 puertas 80cm | 208,57 € |
+| Alto 2 puertas 90cm | 222,36 € |
+| Alto 2 puertas 100cm | 237,67 € |
+| Alto 2 puertas 120cm | 265,23 € |
 
 ## Estructura de fabricación (Logisiete)
 
@@ -112,8 +150,8 @@
 
 **Parte técnica**
 19. Estructura del proyecto en GitHub (frontend + funciones Supabase separadas).
-20. Base de datos en Supabase: tablas de módulos (con precio real del servidor), pedidos, clientes.
-21. Catálogo y carrito (frontend) conectado a datos reales.
+20. ~~Base de datos en Supabase: tablas de módulos (con precio real del servidor), pedidos, clientes.~~ — Hecho (parcial: tabla modulos con 23 registros).
+21. ~~Catálogo y carrito (frontend) conectado a datos reales.~~ — Hecho (catálogo conectado a Supabase).
 22. Edge Function que recalcula el precio real (módulos + recargo 10% si aplica) y crea la sesión de pago en Stripe.
 23. Función que confirma el pago (webhook de Stripe) y guarda el pedido solo cuando el pago es real.
 24. Aviso automático a producción — envío del pedido a Logisiete (inicialmente puede ser un email automático).
@@ -122,7 +160,26 @@
 **Marketing / captación**
 26. Estrategia de primeros clientes — partiendo de cero en visibilidad, el canal B2B (contacto directo con paletas/lampistas) es más rápido que esperar a SEO/Ads.
 
-**Estado actual:** boceto visual de home, catálogo, ficha de producto y diseño 3D terminados. Web publicada en GitHub Pages. Base de datos Supabase creada, tabla `modulos` en construcción (pendiente rediseñar modelo de precios y confirmar tarifas reales de armado con Logisiete).
+## Estado actual (21/08/2026)
+
+### ✅ Hecho hoy:
+- Añadida columna `precio_base` a la tabla `modulos`
+- Insertados 23 módulos con precios G06 (Venecia PET Blanco Mate)
+- Corregidos precios según catálogo G06
+- Añadidos módulos faltantes (35cm, 45cm, 70cm)
+- Conexión de `catalogo.html` a Supabase funcionando
+- Filtros reordenados: Tipo → Ancho → Acabado
+- Filtro de ancho con selección múltiple
+- Botón "Limpiar filtros de ancho"
+- Botón "Limpiar todos los filtros"
+- Ordenación por ancho o precio (asc/desc)
+- Enlaces a ficha de producto (`producto.html?id=...`)
+- Cambiado texto del descuento en `diseno-3d.html` (Opción 3)
+
+### 📋 Pendiente inmediato:
+- Conectar ficha de producto (`producto.html`) para mostrar datos reales
+- Seguir metiendo más módulos (columnas, semicolumnas, etc.)
+- Sistema de carrito
 
 ## Notas para la IA
 
