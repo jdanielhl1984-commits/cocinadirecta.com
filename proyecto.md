@@ -44,7 +44,9 @@
 
 ## Datos técnicos del proveedor (para catálogo y ficha de producto)
 
-- **⭐ Argumento de venta clave: paneles de 19mm.** La mayoría de módulos económicos del mercado son de 16mm. Este dato debe destacarse como comparación directa (no solo como ficha técnica) en home, catálogo y fichas de producto — es el diferenciador más fuerte frente a la competencia barata.
+- **⭐ Argumento de venta clave: paneles de 19mm.** La mayoría de módulos económicos del mercado son de 16mm. Este dato debe tenerse en cuetna como comparación (no solo como ficha técnica) en home, catálogo y fichas de producto — es el diferenciador más fuerte frente a la competencia barata.
+
+- ⭐ Argumento de venta clave: paneles de 19mm. Destacar la robustez de los 19 mm como estándar propio de alta gama, usando afirmaciones categóricas sobre nuestro producto (ej. "Estructura reforzada con paneles de 19 mm para máxima resistencia y cero pandeo") SIN mencionar directamente a marcas competidoras ni generalizar sobre el resto del mercado para evitar problemas de publicidad desleal.
 
 - **Puerta Venecia PET** (modelo principal, el más solicitado): 22mm de grosor, cantos ABS de 1mm microbiselados, tirador integrado, acabado antihuellas (PET), resistente a calor/químicos/impacto. Colores: Blanco Brillo/Mate, Grafito Brillo/Mate, Negro Mate, Gris Claro Mate, Cashmere Mate, Taupe Mate.
 - **Estructura de módulos (bajos y altos):** costados 16mm, paneles horizontales 19mm, trasera 8mm laminada dos caras, cantos vistos ABS 1mm, cantos ocultos 0.4mm melamínico. Baja emisión de formaldehído, certificación TSCA CARB2.
