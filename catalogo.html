@@ -229,7 +229,7 @@
 
     data.forEach(modulo => {
       // Calcular precio de venta (margen 45%)
-      const precioVenta = Math.round(modulo.precio_base * 1.45);
+      const precioVenta = Math.round(modulo.precio_base);
       
       // Generar badge de destacado
       const badge = modulo.destacado ? '<span class="card-badge">Más pedido</span>' : '';
