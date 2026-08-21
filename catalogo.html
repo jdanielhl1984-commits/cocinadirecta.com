@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo de módulos de cocina</title>
+  <!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -292,6 +294,30 @@
     © 2026 CocinaDirecta. Venta directa de módulos de cocina, puertas y accesorios.
   </div>
 </footer>
+<script>
+  // Configurar Supabase
+  const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+  async function cargarCatalogo() {
+    const { data, error } = await supabase
+      .from('modulos')
+      .select('*')
+      .eq('acabado_puerta', 'Venecia PET Blanco Mate')
+      .order('tipo', { ascending: true })
+      .order('ancho_cm', { ascending: true });
+
+    if (error) {
+      console.error('Error al cargar módulos:', error);
+      return;
+    }
+
+    console.log('Módulos cargados:', data);
+    // Aquí pintaremos los módulos en la página
+  }
+
+  cargarCatalogo();
+</script>
 </body>
 </html>
