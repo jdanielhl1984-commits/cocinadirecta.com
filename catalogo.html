@@ -196,7 +196,7 @@
   // Configurar Supabase
   const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   // Mapeo de tipo a categoría legible
   const tipoMap = {
