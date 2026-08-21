@@ -46,7 +46,9 @@
   .filter-option input{accent-color:var(--brass-dark);}
   .filter-option.active-cat{font-weight:600;color:var(--ink);}
 
-  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;color:rgba(28,27,25,0.6);}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;color:rgba(28,27,25,0.6);flex-wrap:wrap;gap:10px;}
+  .toolbar select{padding:4px 8px;border:1px solid var(--line);border-radius:2px;background:var(--paper);font-size:13px;color:var(--ink);}
+
   .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .card{
     background:var(--paper-dim);border:1px solid var(--line);border-radius:6px;
@@ -138,11 +140,21 @@
     <aside class="filters">
       <div class="filter-group">
         <h3>Tipo de módulo</h3>
-        <label class="filter-option active-cat"><input type="checkbox" checked> Bajos</label>
-        <label class="filter-option"><input type="checkbox"> Altos</label>
-        <label class="filter-option"><input type="checkbox"> Columnas</label>
-        <label class="filter-option"><input type="checkbox"> Semicolumnas</label>
-        <label class="filter-option"><input type="checkbox"> Sobreencimeras</label>
+        <label class="filter-option active-cat" data-tipo="bajo">
+          <input type="checkbox" checked> Bajos
+        </label>
+        <label class="filter-option" data-tipo="alto">
+          <input type="checkbox"> Altos
+        </label>
+        <label class="filter-option" data-tipo="columna">
+          <input type="checkbox"> Columnas
+        </label>
+        <label class="filter-option" data-tipo="semicolumna">
+          <input type="checkbox"> Semicolumnas
+        </label>
+        <label class="filter-option" data-tipo="sobreencimera">
+          <input type="checkbox"> Sobreencimeras
+        </label>
       </div>
       <div class="filter-group">
         <h3>Acabado puerta</h3>
@@ -162,7 +174,15 @@
     <main>
       <div class="toolbar">
         <span id="totalModulos">Cargando...</span>
-        <span>Ordenar por: relevancia</span>
+        <div>
+          <label for="ordenSelect" style="margin-right:6px;">Ordenar:</label>
+          <select id="ordenSelect">
+            <option value="ancho_asc">Ancho (menor a mayor)</option>
+            <option value="ancho_desc">Ancho (mayor a menor)</option>
+            <option value="precio_asc">Precio (menor a mayor)</option>
+            <option value="precio_desc">Precio (mayor a menor)</option>
+          </select>
+        </div>
       </div>
 
       <div class="product-grid" id="productGrid">
@@ -196,48 +216,51 @@
   // Configurar Supabase
   const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
-  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   // Mapeo de tipo a categoría legible
   const tipoMap = {
     'bajo': 'Módulo bajo',
     'alto': 'Módulo alto',
     'columna': 'Columna',
-    'semicolumna': 'Semicolumna'
+    'semicolumna': 'Semicolumna',
+    'sobreencimera': 'Sobreencimera'
   };
 
-  async function cargarCatalogo() {
-    const { data, error } = await supabase
-      .from('modulos')
-      .select('*')
-      .eq('acabado_puerta', 'Venecia PET Blanco Mate')
-      .order('tipo', { ascending: true })
-      .order('ancho_cm', { ascending: true });
+  // Variables globales
+  let todosLosModulos = [];
+  let filtroTipoActual = 'bajo'; // por defecto mostramos bajos
+  let ordenActual = 'ancho_asc';
 
-    if (error) {
-      console.error('Error al cargar módulos:', error);
-      document.getElementById('totalModulos').textContent = 'Error al cargar';
-      return;
+  // Función para ordenar
+  function ordenarModulos(modulos, orden) {
+    const copy = [...modulos];
+    switch(orden) {
+      case 'ancho_asc':
+        return copy.sort((a, b) => a.ancho_cm - b.ancho_cm);
+      case 'ancho_desc':
+        return copy.sort((a, b) => b.ancho_cm - a.ancho_cm);
+      case 'precio_asc':
+        return copy.sort((a, b) => a.precio_base - b.precio_base);
+      case 'precio_desc':
+        return copy.sort((a, b) => b.precio_base - a.precio_base);
+      default:
+        return copy;
     }
+  }
 
-    console.log('Módulos cargados:', data);
-
+  // Función para pintar los módulos
+  function pintarModulos(modulos) {
     const grid = document.getElementById('productGrid');
     const totalSpan = document.getElementById('totalModulos');
     grid.innerHTML = '';
-    totalSpan.textContent = data.length + ' módulos';
+    totalSpan.textContent = modulos.length + ' módulos';
 
-    data.forEach(modulo => {
-      // Calcular precio de venta (margen 45%)
+    modulos.forEach(modulo => {
       const precioVenta = Math.round(modulo.precio_base);
-      
-      // Generar badge de destacado
       const badge = modulo.destacado ? '<span class="card-badge">Más pedido</span>' : '';
-
-      // Determinar si es 1 o 2 puertas
       const numPuertas = modulo.nombre.includes('2 puertas') ? '2' : '1';
 
-      // Generar el SVG según el tipo
       let svg = '';
       if (modulo.tipo === 'bajo') {
         if (numPuertas === '1') {
@@ -252,33 +275,103 @@
           svg = `<svg viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
         }
       } else {
-        // Columna o semicolumna
         svg = `<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="28" y1="35" x2="72" y2="35" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><line x1="28" y1="62" x2="72" y2="62" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
       }
 
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <div class="card-media">
-          ${badge}
-          ${svg}
-        </div>
-        <div class="card-body">
-          <div class="card-cat">${tipoMap[modulo.tipo] || modulo.tipo}</div>
-          <div class="card-name">${modulo.nombre}</div>
-          <div class="card-specs">Venecia PET · ${modulo.ancho_cm}×${modulo.alto_cm}×${modulo.fondo_cm}cm</div>
-          <div class="card-foot">
-            <div class="card-price">${precioVenta}€ <span>+IVA</span></div>
-            <button class="card-add">Añadir</button>
+        <a href="producto.html?id=${modulo.id}" style="display:block;color:inherit;text-decoration:none;">
+          <div class="card-media">
+            ${badge}
+            ${svg}
           </div>
-        </div>
+          <div class="card-body">
+            <div class="card-cat">${tipoMap[modulo.tipo] || modulo.tipo}</div>
+            <div class="card-name">${modulo.nombre}</div>
+            <div class="card-specs">Venecia PET · ${modulo.ancho_cm}×${modulo.alto_cm}×${modulo.fondo_cm}cm</div>
+            <div class="card-foot">
+              <div class="card-price">${precioVenta}€ <span>+IVA</span></div>
+              <button class="card-add" onclick="event.preventDefault(); alert('Añadir al carrito: ${modulo.nombre}');">Añadir</button>
+            </div>
+          </div>
+        </a>
       `;
 
       grid.appendChild(card);
     });
   }
 
-  cargarCatalogo();
+  // Función principal para cargar y aplicar filtros/orden
+  async function cargarCatalogo() {
+    const { data, error } = await supabase
+      .from('modulos')
+      .select('*')
+      .eq('acabado_puerta', 'Venecia PET Blanco Mate');
+
+    if (error) {
+      console.error('Error al cargar módulos:', error);
+      document.getElementById('totalModulos').textContent = 'Error al cargar';
+      return;
+    }
+
+    todosLosModulos = data;
+    aplicarFiltrosYOrden();
+  }
+
+  function aplicarFiltrosYOrden() {
+    let filtrados = todosLosModulos;
+
+    // Filtrar por tipo
+    if (filtroTipoActual) {
+      filtrados = filtrados.filter(m => m.tipo === filtroTipoActual);
+    }
+
+    // Ordenar
+    filtrados = ordenarModulos(filtrados, ordenActual);
+
+    pintarModulos(filtrados);
+  }
+
+  // Event listeners para los checkboxes de tipo
+  document.querySelectorAll('.filter-option[data-tipo]').forEach(label => {
+    const checkbox = label.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', function(e) {
+      // Desmarcar los demás
+      document.querySelectorAll('.filter-option[data-tipo]').forEach(lbl => {
+        if (lbl !== label) {
+          lbl.querySelector('input[type="checkbox"]').checked = false;
+          lbl.classList.remove('active-cat');
+        }
+      });
+
+      if (this.checked) {
+        label.classList.add('active-cat');
+        filtroTipoActual = label.dataset.tipo;
+      } else {
+        label.classList.remove('active-cat');
+        // Si se desmarca todo, mostrar todos los tipos
+        const algunoChecked = document.querySelector('.filter-option[data-tipo] input[type="checkbox"]:checked');
+        if (!algunoChecked) {
+          filtroTipoActual = null;
+        } else {
+          // Si hay otro marcado, usar ese
+          const checkedLabel = document.querySelector('.filter-option[data-tipo].active-cat');
+          filtroTipoActual = checkedLabel ? checkedLabel.dataset.tipo : null;
+        }
+      }
+      aplicarFiltrosYOrden();
+    });
+  });
+
+  // Event listener para el selector de orden
+  document.getElementById('ordenSelect').addEventListener('change', function() {
+    ordenActual = this.value;
+    aplicarFiltrosYOrden();
+  });
+
+  // Iniciar
+  document.addEventListener('DOMContentLoaded', cargarCatalogo);
 </script>
 
 </body>
