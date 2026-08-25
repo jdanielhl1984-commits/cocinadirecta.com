@@ -3,20 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bajo 2 puertas 60cm — Venecia PET</title>
+<title>Ficha de producto</title>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1C1B19; --paper:#F7F5F0; --paper-dim:#EFEBE2;
-    --brass:#B08D57; --brass-dark:#8A6C3F; --line: rgba(28,27,25,0.12);
+    --ink:#1C1B19;
+    --paper:#F7F5F0;
+    --paper-dim:#EFEBE2;
+    --brass:#B08D57;
+    --brass-dark:#8A6C3F;
+    --line: rgba(28,27,25,0.12);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
   h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
   a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
   header{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
@@ -33,7 +38,6 @@
 
   .product{padding:24px 0 60px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;}
 
-  /* Galería */
   .gallery-main{
     aspect-ratio:1/1;background:linear-gradient(135deg,#DCD6C8,#EFEBE2);
     border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;
@@ -47,7 +51,6 @@
   .thumb.active{border-color:var(--brass-dark);}
   .thumb svg{width:60%;height:60%;opacity:0.75;}
 
-  /* Info del producto */
   .info-cat{font-size:12px;color:var(--brass-dark);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
   .info h1{font-size:30px;margin-bottom:12px;}
   .info-price{font-family:'Fraunces',serif;font-size:26px;margin-bottom:4px;}
@@ -84,7 +87,6 @@
     padding:12px 14px;font-size:12.5px;color:rgba(28,27,25,0.65);margin-bottom:24px;
   }
 
-  /* Specs */
   .specs{border-top:1px solid var(--line);padding-top:20px;}
   .specs h3{font-size:15px;margin-bottom:12px;}
   .spec-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
@@ -92,12 +94,15 @@
   .spec-row .k{color:rgba(28,27,25,0.6);}
   .spec-row .v{font-weight:500;text-align:right;}
 
-  /* Sección detalle técnico completo */
   section.detail{padding:56px 0;border-top:1px solid var(--line);}
   .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .detail-card{background:var(--paper-dim);border:1px solid var(--line);border-radius:6px;padding:24px;}
   .detail-card h3{font-size:16px;margin-bottom:10px;}
   .detail-card p{font-size:13.5px;color:rgba(28,27,25,0.68);}
+
+  .loading{text-align:center;padding:60px 0;font-size:18px;color:rgba(28,27,25,0.5);}
+  .not-found{text-align:center;padding:60px 0;font-size:18px;color:rgba(28,27,25,0.5);}
+  .not-found a{color:var(--brass-dark);text-decoration:underline;}
 
   footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(28,27,25,0.55);}
 
@@ -120,73 +125,21 @@
       <a href="index.html#calidad">Calidad</a>
       <a href="diseno-3d.html">Diseño 3D</a>
     </nav>
-    <a href="catalogo.html" class="nav-cta">Carrito (0)</a>
+    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
   </div>
 </header>
 
 <div class="wrap breadcrumb">
-  <a href="catalogo.html">Catálogo</a> / <a href="catalogo.html">Módulos bajos</a> / Bajo 2 puertas 60cm
+  <a href="catalogo.html">Catálogo</a> / <span id="breadcrumbNombre">Cargando...</span>
 </div>
 
-<div class="wrap product">
-
-  <div>
-    <div class="gallery-main">
-      <svg viewBox="0 0 100 100"><rect x="18" y="15" width="64" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><circle cx="46" cy="50" r="1.8" fill="#1C1B19"/><circle cx="54" cy="50" r="1.8" fill="#1C1B19"/></svg>
-    </div>
-    <div class="gallery-thumbs">
-      <div class="thumb active"><svg viewBox="0 0 100 100"><rect x="18" y="15" width="64" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
-      <div class="thumb"><svg viewBox="0 0 100 100"><rect x="10" y="30" width="80" height="16" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
-      <div class="thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
-    </div>
-  </div>
-
-  <div class="info">
-    <div class="info-cat">Módulo bajo · Venecia PET</div>
-    <h1>Bajo 2 puertas 60cm</h1>
-    <div class="info-price" id="price">189€ <span>+IVA · sin montaje</span></div>
-    <p class="info-desc">Casco de 19mm con puerta Venecia PET de 22mm, tirador integrado y acabado antihuellas. Incluye bisagras Blum Blumotion y patas regulables.</p>
-
-    <div class="selector">
-      <div class="selector-label">Color <span class="val" id="color-name">Blanco Mate</span></div>
-      <div class="color-row">
-        <div class="color-swatch active" style="background:#F4F1EA;" data-name="Blanco Mate" data-color="Blanco Mate"></div>
-        <div class="color-swatch" style="background:#EDEBE6;" data-name="Blanco Brillo" data-color="Blanco Brillo"></div>
-        <div class="color-swatch" style="background:#B8B4AC;" data-name="Gris Claro Mate" data-color="Gris Claro Mate"></div>
-        <div class="color-swatch" style="background:#8A857C;" data-name="Cashmere Mate" data-color="Cashmere Mate"></div>
-        <div class="color-swatch" style="background:#4A4844;" data-name="Grafito Mate" data-color="Grafito Mate"></div>
-        <div class="color-swatch" style="background:#1E1D1B;" data-name="Negro Mate" data-color="Negro Mate"></div>
-      </div>
-    </div>
-
-    <div class="qty-row">
-      <span style="font-size:13px;font-weight:600;">Cantidad</span>
-      <div class="qty-control">
-        <button aria-label="Restar">−</button>
-        <span>1</span>
-        <button aria-label="Sumar">+</button>
-      </div>
-    </div>
-
-    <button class="btn-add">Añadir al carrito</button>
-
-    <div class="info-note">El formato de entrega (paletizado o montado de fábrica) se elige más adelante, en la configuración final del pedido.</div>
-
-    <div class="specs">
-      <h3>Medidas</h3>
-      <div class="spec-row"><span class="k">Ancho</span><span class="v">60 cm</span></div>
-      <div class="spec-row"><span class="k">Alto</span><span class="v">82 cm</span></div>
-      <div class="spec-row"><span class="k">Fondo</span><span class="v">58 cm</span></div>
-      <div class="spec-row"><span class="k">Grosor puerta</span><span class="v">22 mm</span></div>
-      <div class="spec-row"><span class="k">Grosor panel</span><span class="v">19 mm</span></div>
-      <div class="spec-row"><span class="k">Herrajes</span><span class="v">Blum Blumotion</span></div>
-    </div>
-  </div>
+<div class="wrap product" id="productContainer">
+  <div class="loading">Cargando producto...</div>
 </div>
 
-<section class="detail">
+<section class="detail" id="detailSection">
   <div class="wrap">
-    <div class="detail-grid">
+    <div class="detail-grid" id="detailGrid">
       <div class="detail-card">
         <h3>Puerta Venecia PET</h3>
         <p>22mm de grosor, cantos ABS microbiselados y tirador integrado. Acabado antihuellas, resistente al calor, a los químicos y al impacto.</p>
@@ -210,21 +163,151 @@
 </footer>
 
 <script>
-  const swatches = document.querySelectorAll('.color-swatch');
-  const colorName = document.getElementById('color-name');
-  swatches.forEach(s => {
-    s.addEventListener('click', () => {
-      swatches.forEach(x => x.classList.remove('active'));
-      s.classList.add('active');
-      colorName.textContent = s.dataset.color;
-    });
-  });
+  // Configurar Supabase
+  const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
+  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  const qtyDisplay = document.querySelector('.qty-control span');
-  const [minusBtn, plusBtn] = document.querySelectorAll('.qty-control button');
-  let qty = 1;
-  minusBtn.addEventListener('click', () => { if (qty > 1) { qty--; qtyDisplay.textContent = qty; } });
-  plusBtn.addEventListener('click', () => { qty++; qtyDisplay.textContent = qty; });
+  // Mapeo de tipo a categoría legible
+  const tipoMap = {
+    'bajo': 'Módulo bajo',
+    'alto': 'Módulo alto',
+    'columna': 'Columna',
+    'semicolumna': 'Semicolumna',
+    'fregadero': 'Fregadero',
+    'horno': 'Horno',
+    'rincon': 'Rincón',
+    'sobreencimera': 'Sobreencimera'
+  };
+
+  // Obtener ID de la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const moduloId = urlParams.get('id');
+
+  async function cargarProducto() {
+    const container = document.getElementById('productContainer');
+
+    if (!moduloId) {
+      container.innerHTML = `
+        <div class="not-found">
+          <p>No se especificó ningún producto.</p>
+          <p><a href="catalogo.html">Volver al catálogo</a></p>
+        </div>
+      `;
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('modulos')
+      .select('*')
+      .eq('id', parseInt(moduloId))
+      .single();
+
+    if (error || !data) {
+      container.innerHTML = `
+        <div class="not-found">
+          <p>Producto no encontrado.</p>
+          <p><a href="catalogo.html">Volver al catálogo</a></p>
+        </div>
+      `;
+      return;
+    }
+
+    // Actualizar breadcrumb
+    document.getElementById('breadcrumbNombre').textContent = data.nombre;
+
+    // Generar SVG según tipo
+    const numPuertas = data.nombre.includes('2 puertas') ? '2' : '1';
+    let svg = '';
+    if (data.tipo === 'bajo') {
+      if (numPuertas === '1') {
+        svg = `<svg viewBox="0 0 100 100"><rect x="30" y="15" width="40" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
+      } else {
+        svg = `<svg viewBox="0 0 100 100"><rect x="18" y="15" width="64" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><circle cx="46" cy="50" r="1.5" fill="#1C1B19"/><circle cx="54" cy="50" r="1.5" fill="#1C1B19"/></svg>`;
+      }
+    } else if (data.tipo === 'alto') {
+      if (numPuertas === '1') {
+        svg = `<svg viewBox="0 0 100 100"><rect x="30" y="10" width="40" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
+      } else {
+        svg = `<svg viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
+      }
+    } else {
+      svg = `<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="28" y1="35" x2="72" y2="35" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><line x1="28" y1="62" x2="72" y2="62" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
+    }
+
+    const precioVenta = Math.round(data.precio_base);
+    const categoria = tipoMap[data.tipo] || data.tipo;
+
+    container.innerHTML = `
+      <div class="gallery">
+        <div class="gallery-main">${svg}</div>
+        <div class="gallery-thumbs">
+          <div class="thumb active">${svg}</div>
+          <div class="thumb"><svg viewBox="0 0 100 100"><rect x="10" y="30" width="80" height="16" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
+          <div class="thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info-cat">${categoria} · ${data.acabado_puerta}</div>
+        <h1>${data.nombre}</h1>
+        <div class="info-price">${precioVenta}€ <span>+IVA · sin montaje</span></div>
+        <p class="info-desc">Casco de 19mm con puerta Venecia PET de 22mm, tirador integrado y acabado antihuellas. Incluye bisagras Blum Blumotion y patas regulables.</p>
+
+        <div class="selector">
+          <div class="selector-label">Color <span class="val" id="color-name">Blanco Mate</span></div>
+          <div class="color-row">
+            <div class="color-swatch active" style="background:#F4F1EA;" data-name="Blanco Mate" data-color="Blanco Mate"></div>
+            <div class="color-swatch" style="background:#EDEBE6;" data-name="Blanco Brillo" data-color="Blanco Brillo"></div>
+            <div class="color-swatch" style="background:#B8B4AC;" data-name="Gris Claro Mate" data-color="Gris Claro Mate"></div>
+            <div class="color-swatch" style="background:#8A857C;" data-name="Cashmere Mate" data-color="Cashmere Mate"></div>
+            <div class="color-swatch" style="background:#4A4844;" data-name="Grafito Mate" data-color="Grafito Mate"></div>
+            <div class="color-swatch" style="background:#1E1D1B;" data-name="Negro Mate" data-color="Negro Mate"></div>
+          </div>
+        </div>
+
+        <div class="qty-row">
+          <span style="font-size:13px;font-weight:600;">Cantidad</span>
+          <div class="qty-control">
+            <button aria-label="Restar">−</button>
+            <span>1</span>
+            <button aria-label="Sumar">+</button>
+          </div>
+        </div>
+
+        <button class="btn-add">Añadir al carrito</button>
+
+        <div class="info-note">El formato de entrega (paletizado o montado de fábrica) se elige más adelante, en la configuración final del pedido.</div>
+
+        <div class="specs">
+          <h3>Medidas</h3>
+          <div class="spec-row"><span class="k">Ancho</span><span class="v">${data.ancho_cm} cm</span></div>
+          <div class="spec-row"><span class="k">Alto</span><span class="v">${data.alto_cm} cm</span></div>
+          <div class="spec-row"><span class="k">Fondo</span><span class="v">${data.fondo_cm} cm</span></div>
+          <div class="spec-row"><span class="k">Grosor puerta</span><span class="v">${data.grosor_puerta_mm} mm</span></div>
+          <div class="spec-row"><span class="k">Grosor panel</span><span class="v">19 mm</span></div>
+          <div class="spec-row"><span class="k">Herrajes</span><span class="v">Blum Blumotion</span></div>
+        </div>
+      </div>
+    `;
+
+    // Selector de color
+    document.querySelectorAll('.color-swatch').forEach(el => {
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('color-name').textContent = this.dataset.color;
+      });
+    });
+
+    // Control de cantidad
+    const qtyDisplay = document.querySelector('.qty-control span');
+    const [minusBtn, plusBtn] = document.querySelectorAll('.qty-control button');
+    let qty = 1;
+    minusBtn.addEventListener('click', () => { if (qty > 1) { qty--; qtyDisplay.textContent = qty; } });
+    plusBtn.addEventListener('click', () => { qty++; qtyDisplay.textContent = qty; });
+  }
+
+  document.addEventListener('DOMContentLoaded', cargarProducto);
 </script>
 
 </body>
