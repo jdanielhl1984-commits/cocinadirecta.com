@@ -3,124 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diseño de cocina 3D y presupuesto</title>
+<title>Diseño de cocina 3D y presupuesto — CocinaDirecta</title>
+<meta name="description" content="Servicio de diseño 3D de cocina con plano acotado y presupuesto cerrado de los módulos que necesitas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1C1B19; --paper:#F7F5F0; --paper-dim:#EFEBE2;
-    --brass:#B08D57; --brass-dark:#8A6C3F; --line: rgba(28,27,25,0.12);
+    --paper:#F2EFE8;
+    --paper-dim:#E8E3D6;
+    --ink:#1F1E1A;
+    --brass:#9A6E42;
+    --line: rgba(31,30,26,0.14);
+    --line-light: rgba(255,255,255,0.22);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
-  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.012em;}
   a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
 
-  header{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
-  .logo{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
-  .logo span{color:var(--brass-dark);}
-  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;}
-  .nav-links a{opacity:0.75;transition:opacity .2s;}
+  /* ---------- CABECERA ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;}
+  .logo{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.02em;}
+  .logo em{font-style:normal;color:var(--brass);}
+  .nav-links{display:flex;gap:34px;font-size:13px;}
+  .nav-links a{opacity:0.65;}
   .nav-links a.active,.nav-links a:hover{opacity:1;}
-  .nav-cta{border:1px solid var(--ink);border-radius:2px;padding:9px 18px;font-size:13px;font-weight:600;}
+  .nav-right{display:flex;align-items:center;gap:20px;font-size:13px;}
+  .nav-right .cart{border:1px solid var(--ink);padding:9px 18px;}
 
-  .hero{padding:80px 0 60px;border-bottom:1px solid var(--line);}
-  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;}
-  .eyebrow{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass-dark);font-weight:600;margin-bottom:18px;}
-  .hero h1{font-size:clamp(30px,3.8vw,46px);line-height:1.1;margin-bottom:20px;}
-  .hero p.lede{font-size:17px;color:rgba(28,27,25,0.72);max-width:48ch;margin-bottom:28px;}
+  /* ---------- HERO CON FOTO ---------- */
+  .hero{position:relative;height:56vh;min-height:400px;}
+  .hero-img{position:absolute;inset:0;}
+  .hero-shade{position:absolute;inset:0;background:linear-gradient(to top, rgba(16,15,13,0.90) 0%, rgba(16,15,13,0.62) 40%, rgba(16,15,13,0.32) 100%);}
+  .hero-copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:48px;color:#fff;}
+  .hero-copy h1{font-size:clamp(30px,3.8vw,46px);line-height:1.1;max-width:20ch;text-shadow:0 2px 20px rgba(0,0,0,0.4);}
+  .hero-copy p{margin-top:16px;font-size:16px;max-width:50ch;color:rgba(255,255,255,0.92);text-shadow:0 1px 14px rgba(0,0,0,0.5);}
 
-  .price-card{
-    background:var(--ink);color:var(--paper);border-radius:8px;padding:36px 32px;
-  }
-  .price-card .amount{font-family:'Fraunces',serif;font-size:44px;margin-bottom:4px;}
-  .price-card .amount span{font-size:16px;font-weight:400;opacity:0.6;}
-  .price-card .refund{font-size:13px;color:var(--brass);margin-bottom:24px;}
-  .price-list{list-style:none;margin-bottom:28px;}
-  .price-list li{font-size:14px;padding:8px 0;border-bottom:1px solid rgba(247,245,240,0.12);display:flex;gap:10px;align-items:center;}
+  /* ---------- PRECIO ---------- */
+  .offer{padding:72px 0;}
+  .offer-grid{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:start;}
+  .offer-text h2{font-size:28px;margin-bottom:16px;}
+  .offer-text p{font-size:15px;color:rgba(31,30,26,0.68);margin-bottom:18px;max-width:52ch;}
+
+  .price-card{background:var(--ink);color:var(--paper);padding:38px 34px;}
+  .price-card .amount{font-family:'Fraunces',serif;font-size:46px;line-height:1.1;margin-bottom:6px;}
+  .price-card .amount span{font-size:16px;color:rgba(242,239,232,0.6);font-family:'Inter',sans-serif;}
+  .price-card .refund{font-size:13px;color:var(--brass);margin-bottom:26px;}
+  .price-list{list-style:none;margin-bottom:30px;}
+  .price-list li{font-size:14px;padding:10px 0;border-bottom:1px solid rgba(242,239,232,0.14);display:flex;gap:12px;align-items:flex-start;}
   .price-list li:last-child{border-bottom:none;}
   .price-list li::before{content:"—";color:var(--brass);flex-shrink:0;}
-  .btn-primary{
-    display:block;text-align:center;background:var(--brass);color:var(--ink);
-    padding:15px 24px;border-radius:2px;font-size:15px;font-weight:600;
-  }
+  .btn-primary{display:block;text-align:center;background:var(--brass);color:#fff;padding:16px 24px;font-size:15px;font-weight:500;}
 
-  section{padding:72px 0;}
+  /* ---------- PASOS ---------- */
+  section{padding:80px 0;}
   .section-head{max-width:600px;margin-bottom:44px;}
-  .section-head h2{font-size:28px;margin-bottom:12px;}
-  .section-head p{color:rgba(28,27,25,0.68);font-size:15px;}
+  .section-head h2{font-size:29px;}
+  .section-head p{margin-top:12px;font-size:15px;color:rgba(31,30,26,0.66);}
 
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .step{border:1px solid var(--line);border-radius:6px;padding:28px;background:var(--paper-dim);}
-  .step .step-n{font-family:'Fraunces',serif;font-size:13px;color:var(--brass-dark);margin-bottom:12px;}
-  .step h3{font-size:18px;margin-bottom:8px;}
-  .step p{font-size:14px;color:rgba(28,27,25,0.68);}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .step{background:var(--paper);padding:32px 28px;}
+  .step .step-n{font-size:12.5px;color:var(--brass);margin-bottom:12px;}
+  .step h3{font-size:19px;margin-bottom:8px;}
+  .step p{font-size:14px;color:rgba(31,30,26,0.66);}
 
-  .compare{
-    display:flex;gap:16px;align-items:flex-start;background:var(--paper-dim);
-    border:1px solid var(--line);border-radius:6px;padding:28px 32px;
-  }
-  .compare .mark{font-family:'Fraunces',serif;font-size:20px;color:var(--brass-dark);flex-shrink:0;}
-  .compare p{font-size:14.5px;color:rgba(28,27,25,0.75);}
-  .compare strong{color:var(--ink);}
+  .notice{display:flex;gap:16px;align-items:flex-start;background:var(--paper-dim);border:1px solid var(--line);padding:26px 30px;}
+  .notice .mark{font-family:'Fraunces',serif;font-size:18px;color:var(--brass);flex-shrink:0;line-height:1.3;}
+  .notice p{font-size:14.5px;color:rgba(31,30,26,0.72);}
+  .notice strong{color:var(--ink);}
 
-  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(28,27,25,0.55);}
+  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(31,30,26,0.5);}
 
-  @media (max-width:860px){
-    .hero-grid{grid-template-columns:1fr;}
+  @media (max-width:900px){
+    .offer-grid{grid-template-columns:1fr;gap:36px;}
     .steps{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
-  :focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px;}
+  @media (max-width:560px){
+    .wrap{padding:0 22px;}
+    .logo{font-size:24px;}
+  }
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a href="index.html" class="logo">Cocina<span>Directa</span></a>
+    <a href="index.html" class="logo">Cocina<em>Directa</em></a>
     <nav class="nav-links">
       <a href="catalogo.html">Catálogo</a>
       <a href="index.html#flujo">Cómo funciona</a>
       <a href="index.html#calidad">Calidad</a>
       <a href="diseno-3d.html" class="active">Diseño 3D</a>
     </nav>
-    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+    <div class="nav-right">
+      <a href="#">Mi cuenta</a>
+      <a href="catalogo.html" class="cart">Ver catálogo</a>
+    </div>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow">Diseño personalizado</div>
-      <h1>Tu cocina, diseñada por un equipo con años de experiencia real.</h1>
-      <p class="lede">Envíanos las medidas de tu espacio y lo que necesitas. Te devolvemos un diseño 3D, un plano acotado y el presupuesto exacto de los módulos que necesitas — listo para pedir.</p>
+<div class="hero">
+  <div class="hero-img"><img src="img/atenas-blanco.jpg" alt="Cocina con isla diseñada a medida"></div>
+  <div class="hero-shade"></div>
+  <div class="hero-copy">
+    <div class="wrap">
+      <h1>Tu cocina, diseñada por un equipo con experiencia real.</h1>
+      <p>Envíanos las medidas de tu espacio y te devolvemos un diseño 3D, un plano acotado y el presupuesto exacto de los módulos que necesitas.</p>
+    </div>
+  </div>
+</div>
+
+<div class="offer">
+  <div class="wrap offer-grid">
+    <div class="offer-text">
+      <h2>Un proyecto pensado para tu espacio</h2>
+      <p>No todas las cocinas encajan en el catálogo estándar. Si tienes un rincón difícil, un techo bajo o una distribución complicada, nuestro equipo estudia las medidas y te propone la composición de módulos que mejor aprovecha cada centímetro.</p>
+      <p>Recibes el diseño junto con la lista exacta de referencias y su precio, para que puedas pedirlo cuando quieras — sin compromiso de compra.</p>
     </div>
 
     <div class="price-card">
       <div class="amount">199€ <span>servicio de diseño</span></div>
-      <div class="refund">La inversión en el diseño se convierte en un descuento real: si su pedido de muebles alcanza o supera los 1.500 €, le reintegramos el coste del servicio en su totalidad.</div>
+      <div class="refund">Se descuenta de tu pedido si compras 1.500€ o más</div>
       <ul class="price-list">
         <li>Formulario de medidas y preferencias</li>
         <li>Diseño 3D realista de tu cocina</li>
         <li>Plano de planta acotado</li>
-        <li>1 ronda de cambios incluida</li>
+        <li>Una ronda de cambios incluida</li>
         <li>Presupuesto cerrado con los módulos exactos</li>
         <li>Entrega en 7–10 días</li>
       </ul>
       <a href="#" class="btn-primary">Empezar mi diseño</a>
     </div>
   </div>
-</section>
+</div>
 
 <section>
   <div class="wrap">
     <div class="section-head">
       <h2>Cómo funciona</h2>
-      <p>Un proceso simple, con una persona real detrás de cada diseño.</p>
+      <p>Un proceso simple, con profesionales revisando cada diseño.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -142,11 +170,11 @@
   </div>
 </section>
 
-<section>
+<section style="padding-top:0;">
   <div class="wrap">
-    <div class="compare">
+    <div class="notice">
       <div class="mark">i</div>
-      <p><strong>Un diseño hecho por nuestro equipo, no un cuestionario automático.</strong> Cada proyecto lo revisan profesionales con años de experiencia diseñando cocinas — no es una plantilla generada a partir de un formulario. Si compras módulos por 1.500€ o más, el importe del servicio se descuenta íntegro de tu pedido.</p>
+      <p><strong>Un diseño hecho por nuestro equipo, no un cuestionario automático.</strong> Cada proyecto lo revisan profesionales con años de experiencia diseñando cocinas. El servicio cubre el diseño y el presupuesto de los módulos — la colocación en la vivienda corre por tu cuenta o la de tu instalador.</p>
     </div>
   </div>
 </section>

@@ -3,154 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ficha de producto</title>
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Bajo 1 puerta 60cm — Venecia PET | CocinaDirecta</title>
+<meta name="description" content="Módulo bajo de 60cm con casco de 19mm, puerta Venecia PET de 22mm y bisagras Blum Blumotion.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1C1B19;
-    --paper:#F7F5F0;
-    --paper-dim:#EFEBE2;
-    --brass:#B08D57;
-    --brass-dark:#8A6C3F;
-    --line: rgba(28,27,25,0.12);
+    --paper:#F2EFE8;
+    --paper-dim:#E8E3D6;
+    --ink:#1F1E1A;
+    --brass:#9A6E42;
+    --line: rgba(31,30,26,0.14);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
-  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.012em;}
   a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  button{font-family:inherit;}
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
 
-  header{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
-  .logo{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
-  .logo span{color:var(--brass-dark);}
-  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;}
-  .nav-links a{opacity:0.75;transition:opacity .2s;}
+  /* ---------- CABECERA ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;}
+  .logo{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.02em;}
+  .logo em{font-style:normal;color:var(--brass);}
+  .nav-links{display:flex;gap:34px;font-size:13px;}
+  .nav-links a{opacity:0.65;}
   .nav-links a:hover{opacity:1;}
-  .nav-cta{border:1px solid var(--ink);border-radius:2px;padding:9px 18px;font-size:13px;font-weight:600;}
+  .nav-right{display:flex;align-items:center;gap:20px;font-size:13px;}
+  .nav-right .cart{border:1px solid var(--ink);padding:9px 18px;}
 
-  .breadcrumb{font-size:13px;color:rgba(28,27,25,0.55);padding:20px 0 0;}
+  .breadcrumb{font-size:13px;color:rgba(31,30,26,0.5);padding:24px 0 0;}
   .breadcrumb a:hover{color:var(--ink);}
 
-  .product{padding:24px 0 60px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;}
+  /* ---------- PRODUCTO ---------- */
+  .product{padding:28px 0 70px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;}
 
-  .gallery-main{
-    aspect-ratio:1/1;background:linear-gradient(135deg,#DCD6C8,#EFEBE2);
-    border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;
-  }
-  .gallery-main svg{width:46%;height:46%;}
+  .gallery-main{aspect-ratio:1/1;overflow:hidden;background:var(--paper-dim);margin-bottom:12px;}
   .gallery-thumbs{display:flex;gap:10px;}
-  .thumb{
-    width:64px;height:64px;border-radius:4px;background:var(--paper-dim);border:1.5px solid var(--line);
-    display:flex;align-items:center;justify-content:center;cursor:pointer;
-  }
-  .thumb.active{border-color:var(--brass-dark);}
-  .thumb svg{width:60%;height:60%;opacity:0.75;}
+  .thumb{width:74px;height:74px;overflow:hidden;border:2px solid transparent;cursor:pointer;background:var(--paper-dim);}
+  .thumb.active{border-color:var(--ink);}
 
-  .info-cat{font-size:12px;color:var(--brass-dark);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
-  .info h1{font-size:30px;margin-bottom:12px;}
-  .info-price{font-family:'Fraunces',serif;font-size:26px;margin-bottom:4px;}
-  .info-price span{font-size:13px;font-weight:400;color:rgba(28,27,25,0.55);font-family:'Inter',sans-serif;}
-  .info-desc{font-size:14.5px;color:rgba(28,27,25,0.7);margin-bottom:24px;}
+  .info-cat{font-size:12px;color:var(--brass);margin-bottom:8px;}
+  .info h1{font-size:32px;margin-bottom:14px;}
+  .info-price{font-family:'Fraunces',serif;font-size:28px;margin-bottom:4px;}
+  .info-price span{font-size:13px;color:rgba(31,30,26,0.55);font-family:'Inter',sans-serif;}
+  .info-desc{font-size:14.5px;color:rgba(31,30,26,0.7);margin-bottom:28px;}
 
-  .selector{margin-bottom:22px;}
-  .selector-label{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;}
-  .selector-label .val{font-weight:400;color:rgba(28,27,25,0.6);}
+  .selector{margin-bottom:26px;}
+  .selector-label{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;}
+  .selector-label .val{font-weight:400;color:rgba(31,30,26,0.6);}
   .color-row{display:flex;gap:10px;flex-wrap:wrap;}
-  .color-swatch{
-    width:40px;height:40px;border-radius:4px;border:2px solid transparent;cursor:pointer;position:relative;
-  }
+  .color-swatch{width:42px;height:42px;border:2px solid transparent;cursor:pointer;position:relative;outline:1px solid var(--line);outline-offset:-1px;}
   .color-swatch.active{border-color:var(--ink);}
-  .color-swatch::after{
-    content:attr(data-name);position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
-    font-size:10.5px;white-space:nowrap;color:rgba(28,27,25,0.6);opacity:0;transition:opacity .15s;
-  }
-  .color-swatch:hover::after{opacity:1;}
 
-  .qty-row{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
-  .qty-control{display:flex;align-items:center;border:1px solid var(--line);border-radius:2px;}
-  .qty-control button{width:36px;height:38px;background:none;border:none;font-size:16px;cursor:pointer;}
-  .qty-control span{width:32px;text-align:center;font-size:14px;}
+  .qty-row{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .qty-control{display:flex;align-items:center;border:1px solid var(--line);}
+  .qty-control button{width:38px;height:40px;background:none;border:none;font-size:16px;cursor:pointer;}
+  .qty-control span{width:34px;text-align:center;font-size:14px;}
 
-  .btn-add{
-    width:100%;background:var(--ink);color:var(--paper);border:none;padding:16px;
-    border-radius:2px;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:14px;
-  }
+  .btn-add{width:100%;background:var(--ink);color:var(--paper);border:none;padding:17px;font-size:15px;cursor:pointer;margin-bottom:16px;}
   .btn-add:hover{background:#000;}
 
-  .info-note{
-    background:var(--paper-dim);border:1px solid var(--line);border-radius:4px;
-    padding:12px 14px;font-size:12.5px;color:rgba(28,27,25,0.65);margin-bottom:24px;
-  }
+  .info-note{background:var(--paper-dim);border:1px solid var(--line);padding:14px 16px;font-size:12.5px;color:rgba(31,30,26,0.66);margin-bottom:28px;}
 
-  .specs{border-top:1px solid var(--line);padding-top:20px;}
-  .specs h3{font-size:15px;margin-bottom:12px;}
-  .spec-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+  .specs{border-top:1px solid var(--line);padding-top:22px;}
+  .specs h3{font-size:16px;margin-bottom:14px;}
+  .spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
   .spec-row:last-child{border-bottom:none;}
-  .spec-row .k{color:rgba(28,27,25,0.6);}
+  .spec-row .k{color:rgba(31,30,26,0.6);}
   .spec-row .v{font-weight:500;text-align:right;}
 
-  section.detail{padding:56px 0;border-top:1px solid var(--line);}
-  .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .detail-card{background:var(--paper-dim);border:1px solid var(--line);border-radius:6px;padding:24px;}
-  .detail-card h3{font-size:16px;margin-bottom:10px;}
-  .detail-card p{font-size:13.5px;color:rgba(28,27,25,0.68);}
+  /* ---------- DETALLE TÉCNICO ---------- */
+  section.detail{padding:70px 0;border-top:1px solid var(--line);}
+  section.detail h2{font-size:28px;margin-bottom:36px;}
+  .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .detail-card{background:var(--paper);padding:30px 28px;}
+  .detail-card h3{font-size:17px;margin-bottom:10px;}
+  .detail-card p{font-size:13.5px;color:rgba(31,30,26,0.68);}
 
-  .loading{text-align:center;padding:60px 0;font-size:18px;color:rgba(28,27,25,0.5);}
-  .not-found{text-align:center;padding:60px 0;font-size:18px;color:rgba(28,27,25,0.5);}
-  .not-found a{color:var(--brass-dark);text-decoration:underline;}
+  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(31,30,26,0.5);}
 
-  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(28,27,25,0.55);}
-
-  @media (max-width:860px){
-    .product{grid-template-columns:1fr;}
+  @media (max-width:900px){
+    .product{grid-template-columns:1fr;gap:36px;}
     .detail-grid{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
-  :focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px;}
+  @media (max-width:560px){
+    .wrap{padding:0 22px;}
+    .logo{font-size:24px;}
+  }
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a href="index.html" class="logo">Cocina<span>Directa</span></a>
+    <a href="index.html" class="logo">Cocina<em>Directa</em></a>
     <nav class="nav-links">
       <a href="catalogo.html">Catálogo</a>
       <a href="index.html#flujo">Cómo funciona</a>
       <a href="index.html#calidad">Calidad</a>
       <a href="diseno-3d.html">Diseño 3D</a>
     </nav>
-    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+    <div class="nav-right">
+      <a href="#">Mi cuenta</a>
+      <a href="#" class="cart">Carrito (0)</a>
+    </div>
   </div>
 </header>
 
 <div class="wrap breadcrumb">
-  <a href="catalogo.html">Catálogo</a> / <span id="breadcrumbNombre">Cargando...</span>
+  <a href="catalogo.html">Catálogo</a> / <a href="catalogo.html">Módulos bajos</a> / Bajo 1 puerta 60cm
 </div>
 
-<div class="wrap product" id="productContainer">
-  <div class="loading">Cargando producto...</div>
+<div class="wrap product">
+
+  <div>
+    <div class="gallery-main">
+      <img id="main-photo" src="img/venecia-grafito-mate.jpg" alt="Módulo bajo de 1 puerta 60cm en acabado Venecia">
+    </div>
+    <div class="gallery-thumbs">
+      <div class="thumb active"><img src="img/venecia-grafito-mate.jpg" alt="Vista general"></div>
+      <div class="thumb"><img src="img/atenas-blanco.jpg" alt="Acabado en blanco"></div>
+      <div class="thumb"><img src="img/gris-piedra.jpg" alt="Detalle de composición"></div>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="info-cat">Módulo bajo · Venecia PET</div>
+    <h1>Bajo 1 puerta 60cm</h1>
+    <div class="info-price" id="price">189€ <span>+IVA</span></div>
+    <p class="info-desc">Casco de 19mm con puerta Venecia PET de 22mm, tirador integrado y acabado antihuellas. Incluye bisagras Blum Blumotion y patas regulables.</p>
+
+    <div class="selector">
+      <div class="selector-label">Color <span class="val" id="color-name">Blanco Mate</span></div>
+      <div class="color-row">
+        <div class="color-swatch active" style="background:#F4F1EA;" data-color="Blanco Mate"></div>
+        <div class="color-swatch" style="background:#EDEBE6;" data-color="Blanco Brillo"></div>
+        <div class="color-swatch" style="background:#B8B4AC;" data-color="Gris Claro Mate"></div>
+        <div class="color-swatch" style="background:#A79880;" data-color="Taupe Mate"></div>
+        <div class="color-swatch" style="background:#8A857C;" data-color="Cashmere Mate"></div>
+        <div class="color-swatch" style="background:#4A4844;" data-color="Grafito Mate"></div>
+        <div class="color-swatch" style="background:#565450;" data-color="Grafito Brillo"></div>
+        <div class="color-swatch" style="background:#1E1D1B;" data-color="Negro Mate"></div>
+      </div>
+    </div>
+
+    <div class="qty-row">
+      <span style="font-size:13px;font-weight:600;">Cantidad</span>
+      <div class="qty-control">
+        <button aria-label="Restar">−</button>
+        <span>1</span>
+        <button aria-label="Sumar">+</button>
+      </div>
+    </div>
+
+    <button class="btn-add">Añadir al carrito</button>
+
+    <div class="info-note">El formato de entrega (paletizado en caja o armado de fábrica) se elige más adelante, en la configuración final del pedido.</div>
+
+    <div class="specs">
+      <h3>Medidas y materiales</h3>
+      <div class="spec-row"><span class="k">Ancho</span><span class="v">60 cm</span></div>
+      <div class="spec-row"><span class="k">Alto</span><span class="v">80 cm</span></div>
+      <div class="spec-row"><span class="k">Fondo</span><span class="v">58 cm</span></div>
+      <div class="spec-row"><span class="k">Grosor de puerta</span><span class="v">22 mm</span></div>
+      <div class="spec-row"><span class="k">Paneles horizontales</span><span class="v">19 mm</span></div>
+      <div class="spec-row"><span class="k">Costados</span><span class="v">16 mm</span></div>
+      <div class="spec-row"><span class="k">Trasera</span><span class="v">8 mm laminada</span></div>
+      <div class="spec-row"><span class="k">Herrajes</span><span class="v">Blum Blumotion</span></div>
+    </div>
+  </div>
 </div>
 
-<section class="detail" id="detailSection">
+<section class="detail">
   <div class="wrap">
-    <div class="detail-grid" id="detailGrid">
+    <h2>Lo que hay dentro de este módulo</h2>
+    <div class="detail-grid">
       <div class="detail-card">
         <h3>Puerta Venecia PET</h3>
-        <p>22mm de grosor, cantos ABS microbiselados y tirador integrado. Acabado antihuellas, resistente al calor, a los químicos y al impacto.</p>
+        <p>22mm de grosor, cantos ABS de 1mm microbiselados y tirador integrado. Acabado antihuellas, resistente al calor, a los químicos y al impacto.</p>
       </div>
       <div class="detail-card">
         <h3>Estructura del casco</h3>
-        <p>Costados de 16mm y paneles de 19mm — el mismo estándar que usan las marcas de gama alta. Cantos vistos en ABS de 1mm. Certificación TSCA CARB2.</p>
+        <p>Estructura reforzada con paneles horizontales de 19mm para máxima resistencia y cero pandeo. Costados de 16mm, trasera de 8mm laminada a dos caras y cantos vistos en ABS de 1mm. Certificación TSCA CARB2.</p>
       </div>
       <div class="detail-card">
         <h3>Herrajes</h3>
-        <p>Bisagras Blum Clip-top Blumotion de cierre suave y apertura 110°. Patas regulables de expansión por presión.</p>
+        <p>Bisagras Blum Clip-top Blumotion de cierre suave y apertura de 110°. Patas regulables de expansión por presión.</p>
       </div>
     </div>
   </div>
@@ -163,151 +208,31 @@
 </footer>
 
 <script>
-  // Configurar Supabase
-  const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
-  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-  // Mapeo de tipo a categoría legible
-  const tipoMap = {
-    'bajo': 'Módulo bajo',
-    'alto': 'Módulo alto',
-    'columna': 'Columna',
-    'semicolumna': 'Semicolumna',
-    'fregadero': 'Fregadero',
-    'horno': 'Horno',
-    'rincon': 'Rincón',
-    'sobreencimera': 'Sobreencimera'
-  };
-
-  // Obtener ID de la URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const moduloId = urlParams.get('id');
-
-  async function cargarProducto() {
-    const container = document.getElementById('productContainer');
-
-    if (!moduloId) {
-      container.innerHTML = `
-        <div class="not-found">
-          <p>No se especificó ningún producto.</p>
-          <p><a href="catalogo.html">Volver al catálogo</a></p>
-        </div>
-      `;
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from('modulos')
-      .select('*')
-      .eq('id', parseInt(moduloId))
-      .single();
-
-    if (error || !data) {
-      container.innerHTML = `
-        <div class="not-found">
-          <p>Producto no encontrado.</p>
-          <p><a href="catalogo.html">Volver al catálogo</a></p>
-        </div>
-      `;
-      return;
-    }
-
-    // Actualizar breadcrumb
-    document.getElementById('breadcrumbNombre').textContent = data.nombre;
-
-    // Generar SVG según tipo
-    const numPuertas = data.nombre.includes('2 puertas') ? '2' : '1';
-    let svg = '';
-    if (data.tipo === 'bajo') {
-      if (numPuertas === '1') {
-        svg = `<svg viewBox="0 0 100 100"><rect x="30" y="15" width="40" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-      } else {
-        svg = `<svg viewBox="0 0 100 100"><rect x="18" y="15" width="64" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><circle cx="46" cy="50" r="1.5" fill="#1C1B19"/><circle cx="54" cy="50" r="1.5" fill="#1C1B19"/></svg>`;
-      }
-    } else if (data.tipo === 'alto') {
-      if (numPuertas === '1') {
-        svg = `<svg viewBox="0 0 100 100"><rect x="30" y="10" width="40" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-      } else {
-        svg = `<svg viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-      }
-    } else {
-      svg = `<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="28" y1="35" x2="72" y2="35" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><line x1="28" y1="62" x2="72" y2="62" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-    }
-
-    const precioVenta = Math.round(data.precio_base);
-    const categoria = tipoMap[data.tipo] || data.tipo;
-
-    container.innerHTML = `
-      <div class="gallery">
-        <div class="gallery-main">${svg}</div>
-        <div class="gallery-thumbs">
-          <div class="thumb active">${svg}</div>
-          <div class="thumb"><svg viewBox="0 0 100 100"><rect x="10" y="30" width="80" height="16" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
-          <div class="thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#1C1B19" stroke-width="1.5"/></svg></div>
-        </div>
-      </div>
-      <div class="info">
-        <div class="info-cat">${categoria} · ${data.acabado_puerta}</div>
-        <h1>${data.nombre}</h1>
-        <div class="info-price">${precioVenta}€ <span>+IVA · sin montaje</span></div>
-        <p class="info-desc">Casco de 19mm con puerta Venecia PET de 22mm, tirador integrado y acabado antihuellas. Incluye bisagras Blum Blumotion y patas regulables.</p>
-
-        <div class="selector">
-          <div class="selector-label">Color <span class="val" id="color-name">Blanco Mate</span></div>
-          <div class="color-row">
-            <div class="color-swatch active" style="background:#F4F1EA;" data-name="Blanco Mate" data-color="Blanco Mate"></div>
-            <div class="color-swatch" style="background:#EDEBE6;" data-name="Blanco Brillo" data-color="Blanco Brillo"></div>
-            <div class="color-swatch" style="background:#B8B4AC;" data-name="Gris Claro Mate" data-color="Gris Claro Mate"></div>
-            <div class="color-swatch" style="background:#8A857C;" data-name="Cashmere Mate" data-color="Cashmere Mate"></div>
-            <div class="color-swatch" style="background:#4A4844;" data-name="Grafito Mate" data-color="Grafito Mate"></div>
-            <div class="color-swatch" style="background:#1E1D1B;" data-name="Negro Mate" data-color="Negro Mate"></div>
-          </div>
-        </div>
-
-        <div class="qty-row">
-          <span style="font-size:13px;font-weight:600;">Cantidad</span>
-          <div class="qty-control">
-            <button aria-label="Restar">−</button>
-            <span>1</span>
-            <button aria-label="Sumar">+</button>
-          </div>
-        </div>
-
-        <button class="btn-add">Añadir al carrito</button>
-
-        <div class="info-note">El formato de entrega (paletizado o montado de fábrica) se elige más adelante, en la configuración final del pedido.</div>
-
-        <div class="specs">
-          <h3>Medidas</h3>
-          <div class="spec-row"><span class="k">Ancho</span><span class="v">${data.ancho_cm} cm</span></div>
-          <div class="spec-row"><span class="k">Alto</span><span class="v">${data.alto_cm} cm</span></div>
-          <div class="spec-row"><span class="k">Fondo</span><span class="v">${data.fondo_cm} cm</span></div>
-          <div class="spec-row"><span class="k">Grosor puerta</span><span class="v">${data.grosor_puerta_mm} mm</span></div>
-          <div class="spec-row"><span class="k">Grosor panel</span><span class="v">19 mm</span></div>
-          <div class="spec-row"><span class="k">Herrajes</span><span class="v">Blum Blumotion</span></div>
-        </div>
-      </div>
-    `;
-
-    // Selector de color
-    document.querySelectorAll('.color-swatch').forEach(el => {
-      el.addEventListener('click', function() {
-        document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById('color-name').textContent = this.dataset.color;
-      });
+  const swatches = document.querySelectorAll('.color-swatch');
+  const colorName = document.getElementById('color-name');
+  swatches.forEach(s => {
+    s.addEventListener('click', () => {
+      swatches.forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+      colorName.textContent = s.dataset.color;
     });
+  });
 
-    // Control de cantidad
-    const qtyDisplay = document.querySelector('.qty-control span');
-    const [minusBtn, plusBtn] = document.querySelectorAll('.qty-control button');
-    let qty = 1;
-    minusBtn.addEventListener('click', () => { if (qty > 1) { qty--; qtyDisplay.textContent = qty; } });
-    plusBtn.addEventListener('click', () => { qty++; qtyDisplay.textContent = qty; });
-  }
+  const thumbs = document.querySelectorAll('.thumb');
+  const mainPhoto = document.getElementById('main-photo');
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => {
+      thumbs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      mainPhoto.src = t.querySelector('img').src;
+    });
+  });
 
-  document.addEventListener('DOMContentLoaded', cargarProducto);
+  const qtyDisplay = document.querySelector('.qty-control span');
+  const [minusBtn, plusBtn] = document.querySelectorAll('.qty-control button');
+  let qty = 1;
+  minusBtn.addEventListener('click', () => { if (qty > 1) { qty--; qtyDisplay.textContent = qty; } });
+  plusBtn.addEventListener('click', () => { qty++; qtyDisplay.textContent = qty; });
 </script>
 
 </body>

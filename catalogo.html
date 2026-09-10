@@ -3,151 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo de módulos de cocina</title>
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Catálogo de módulos de cocina — CocinaDirecta</title>
+<meta name="description" content="Módulos de cocina completos: bajos, altos y columnas. Casco de 19mm, puerta y herrajes bajo una misma referencia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1C1B19;
-    --paper:#F7F5F0;
-    --paper-dim:#EFEBE2;
-    --brass:#B08D57;
-    --brass-dark:#8A6C3F;
-    --line: rgba(28,27,25,0.12);
+    --paper:#F2EFE8;
+    --paper-dim:#E8E3D6;
+    --ink:#1F1E1A;
+    --brass:#9A6E42;
+    --line: rgba(31,30,26,0.14);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
-  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.012em;}
   a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+  button{font-family:inherit;}
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
 
-  header{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
-  .logo{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
-  .logo span{color:var(--brass-dark);}
-  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;}
-  .nav-links a{opacity:0.75;transition:opacity .2s;}
+  /* ---------- CABECERA (misma en todas las páginas) ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;}
+  .logo{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.02em;}
+  .logo em{font-style:normal;color:var(--brass);}
+  .nav-links{display:flex;gap:34px;font-size:13px;}
+  .nav-links a{opacity:0.65;}
   .nav-links a.active,.nav-links a:hover{opacity:1;}
+  .nav-right{display:flex;align-items:center;gap:20px;font-size:13px;}
+  .nav-right .cart{border:1px solid var(--ink);padding:9px 18px;}
 
-  .page-head{padding:40px 0 28px;border-bottom:1px solid var(--line);}
-  .page-head .eyebrow{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass-dark);font-weight:600;margin-bottom:10px;}
-  .page-head h1{font-size:clamp(28px,3.4vw,38px);}
-  .page-head p{color:rgba(28,27,25,0.7);font-size:15px;margin-top:8px;max-width:60ch;}
+  /* ---------- ENCABEZADO DE PÁGINA ---------- */
+  .page-head{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+  .page-head h1{font-size:clamp(30px,3.6vw,42px);}
+  .page-head p{color:rgba(31,30,26,0.66);font-size:15px;margin-top:12px;max-width:62ch;}
 
-  .layout{display:grid;grid-template-columns:220px 1fr;gap:40px;padding:36px 0 80px;}
+  /* ---------- DISPOSICIÓN ---------- */
+  .layout{display:grid;grid-template-columns:220px 1fr;gap:48px;padding:40px 0 90px;}
 
-  .filters{position:sticky;top:80px;align-self:start;}
-  .filter-group{margin-bottom:28px;}
-  .filter-group h3{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:rgba(28,27,25,0.55);margin-bottom:12px;font-family:'Inter',sans-serif;}
-  .filter-option{display:flex;align-items:center;gap:8px;font-size:14px;padding:6px 0;cursor:pointer;color:rgba(28,27,25,0.8);}
-  .filter-option input{accent-color:var(--brass-dark);}
-  .filter-option.active-cat{font-weight:600;color:var(--ink);}
+  .filters{position:sticky;top:104px;align-self:start;}
+  .filter-group{margin-bottom:30px;}
+  .filter-group h3{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:rgba(31,30,26,0.5);margin-bottom:12px;}
+  .filter-option{display:flex;align-items:center;gap:9px;font-size:14px;padding:6px 0;cursor:pointer;color:rgba(31,30,26,0.8);}
+  .filter-option input{accent-color:var(--brass);}
 
-  .btn-limpiar{
-    margin-top:12px;
-    padding:8px 16px;
-    background:var(--paper-dim);
-    border:1px solid var(--line);
-    border-radius:4px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--ink);
-    cursor:pointer;
-    width:100%;
-    text-align:center;
-  }
-  .btn-limpiar:hover{
-    background:var(--ink);
-    color:var(--paper);
-  }
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;font-size:13px;color:rgba(31,30,26,0.6);border-bottom:1px solid var(--line);padding-bottom:14px;}
 
-  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;color:rgba(28,27,25,0.6);flex-wrap:wrap;gap:10px;}
-  .toolbar select{padding:4px 8px;border:1px solid var(--line);border-radius:2px;background:var(--paper);font-size:13px;color:var(--ink);}
-  .filtros-activos{font-size:12px;color:var(--brass-dark);}
-
-  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .card{
-    background:var(--paper-dim);border:1px solid var(--line);border-radius:6px;
-    overflow:hidden;transition:border-color .2s;
-  }
-  .card:hover{border-color:var(--brass);}
-  .card-media{
-    aspect-ratio:4/3;background:linear-gradient(135deg,#DCD6C8,#EFEBE2);
-    display:flex;align-items:center;justify-content:center;position:relative;
-  }
-  .card-media svg{width:56%;height:56%;opacity:0.8;}
-  .card-badge{
-    position:absolute;top:10px;left:10px;background:var(--ink);color:var(--paper);
-    font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:2px;letter-spacing:0.03em;
-  }
-  .card-body{padding:16px 18px 18px;}
-  .card-cat{font-size:11.5px;color:var(--brass-dark);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;}
-  .card-name{font-size:16px;margin-bottom:6px;}
-  .card-specs{font-size:12.5px;color:rgba(28,27,25,0.6);margin-bottom:12px;}
-  .card-foot{display:flex;justify-content:space-between;align-items:center;}
-  .card-price{font-size:16px;font-weight:600;font-family:'Fraunces',serif;}
-  .card-price span{font-size:11.5px;font-weight:400;color:rgba(28,27,25,0.55);font-family:'Inter',sans-serif;}
-  .card-add{
-    font-size:12.5px;font-weight:600;border:1px solid var(--ink);border-radius:2px;
-    padding:7px 12px;background:transparent;color:var(--ink);cursor:pointer;
-  }
+  /* ---------- TARJETAS DE PRODUCTO ---------- */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .card{display:block;}
+  .card-media{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--paper-dim);margin-bottom:14px;}
+  .card-media img{transition:transform .6s cubic-bezier(.2,.6,.2,1);}
+  .card:hover .card-media img{transform:scale(1.04);}
+  .card-badge{position:absolute;top:12px;left:12px;background:var(--ink);color:var(--paper);font-size:11px;padding:5px 10px;z-index:2;}
+  .card-cat{font-size:11.5px;color:rgba(31,30,26,0.5);margin-bottom:5px;}
+  .card-name{font-family:'Fraunces',serif;font-size:17px;margin-bottom:5px;}
+  .card-specs{font-size:12.5px;color:var(--brass);margin-bottom:14px;}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;}
+  .card-price{font-family:'Fraunces',serif;font-size:18px;}
+  .card-price span{font-size:11.5px;color:rgba(31,30,26,0.5);font-family:'Inter',sans-serif;}
+  .card-add{font-size:12.5px;border:1px solid var(--ink);padding:8px 14px;background:transparent;color:var(--ink);cursor:pointer;}
   .card-add:hover{background:var(--ink);color:var(--paper);}
 
-  .cross-sell{
-    grid-column:1/-1;background:var(--ink);color:var(--paper);border-radius:6px;
-    padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:8px;
-  }
-  .cross-sell p{font-size:13.5px;color:rgba(247,245,240,0.75);}
+  /* ---------- AVISOS ---------- */
+  .cross-sell{grid-column:1/-1;background:var(--ink);color:var(--paper);padding:26px 30px;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:14px;}
+  .cross-sell p{font-size:14px;color:rgba(242,239,232,0.75);}
   .cross-sell strong{color:var(--paper);}
-  .cross-sell a{font-size:13px;font-weight:600;border-bottom:1px solid var(--brass);color:var(--paper);white-space:nowrap;}
+  .cross-sell a{font-size:13px;border-bottom:1px solid var(--brass);color:var(--paper);white-space:nowrap;}
 
-  .design-cta{
-    grid-column:1/-1;border:1px dashed var(--brass);border-radius:6px;
-    padding:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:20px;
-  }
-  .design-cta h3{font-size:17px;margin-bottom:4px;}
-  .design-cta p{font-size:13.5px;color:rgba(28,27,25,0.65);}
-  .design-cta a.btn{
-    background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:2px;
-    font-size:13.5px;font-weight:600;white-space:nowrap;
-  }
+  .design-cta{grid-column:1/-1;border:1px solid var(--line);background:var(--paper-dim);padding:30px;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:26px;}
+  .design-cta h3{font-size:19px;margin-bottom:5px;}
+  .design-cta p{font-size:14px;color:rgba(31,30,26,0.66);}
+  .design-cta a.btn{background:var(--ink);color:var(--paper);padding:13px 24px;font-size:13.5px;white-space:nowrap;}
 
-  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(28,27,25,0.55);}
+  footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(31,30,26,0.5);}
 
-  @media (max-width:900px){
-    .layout{grid-template-columns:1fr;}
+  @media (max-width:1000px){
+    .layout{grid-template-columns:1fr;gap:30px;}
     .filters{position:static;}
     .product-grid{grid-template-columns:repeat(2,1fr);}
     .nav-links{display:none;}
     .cross-sell,.design-cta{flex-direction:column;align-items:flex-start;}
   }
   @media (max-width:560px){
+    .wrap{padding:0 22px;}
     .product-grid{grid-template-columns:1fr;}
+    .logo{font-size:24px;}
   }
-  :focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px;}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a href="index.html" class="logo">Cocina<span>Directa</span></a>
+    <a href="index.html" class="logo">Cocina<em>Directa</em></a>
     <nav class="nav-links">
       <a href="catalogo.html" class="active">Catálogo</a>
       <a href="index.html#flujo">Cómo funciona</a>
       <a href="index.html#calidad">Calidad</a>
       <a href="diseno-3d.html">Diseño 3D</a>
     </nav>
-    <a href="#" class="nav-cta" style="border:1px solid var(--ink);border-radius:2px;padding:9px 18px;font-size:13px;font-weight:600;">Carrito (0)</a>
+    <div class="nav-right">
+      <a href="#">Mi cuenta</a>
+      <a href="#" class="cart">Carrito (0)</a>
+    </div>
   </div>
 </header>
 
 <div class="page-head">
   <div class="wrap">
-    <div class="eyebrow">Catálogo</div>
     <h1>Módulos de cocina</h1>
     <p>Cada módulo incluye casco, puerta y herrajes bajo una misma referencia. Elige por tipo, y configura el formato de entrega en el carrito.</p>
   </div>
@@ -157,119 +125,127 @@
   <div class="layout">
 
     <aside class="filters">
-      <!-- FILTRO 1: TIPO DE MÓDULO -->
       <div class="filter-group">
         <h3>Tipo de módulo</h3>
-        <label class="filter-option active-cat" data-tipo="bajo">
-  <input type="checkbox" checked> Bajos
-</label>
-<label class="filter-option" data-tipo="alto">
-  <input type="checkbox"> Altos
-</label>
-<label class="filter-option" data-tipo="columna">
-  <input type="checkbox"> Columnas
-</label>
-<label class="filter-option" data-tipo="semicolumna">
-  <input type="checkbox"> Semicolumnas
-</label>
-<label class="filter-option" data-tipo="fregadero">
-  <input type="checkbox"> Fregaderos
-</label>
-<label class="filter-option" data-tipo="horno">
-  <input type="checkbox"> Hornos
-</label>
-<label class="filter-option" data-tipo="rincon">
-  <input type="checkbox"> Rincón
-</label>
+        <label class="filter-option"><input type="checkbox" checked> Bajos</label>
+        <label class="filter-option"><input type="checkbox"> Altos</label>
+        <label class="filter-option"><input type="checkbox"> Columnas</label>
+        <label class="filter-option"><input type="checkbox"> Semicolumnas</label>
+        <label class="filter-option"><input type="checkbox"> Sobreencimeras</label>
       </div>
-
-      <!-- FILTRO 2: ANCHO (ahora arriba, sin scroll) -->
       <div class="filter-group">
-        <h3>Ancho (cm)</h3>
-        <label class="filter-option" data-medida="30">
-          <input type="checkbox"> 30
-        </label>
-        <label class="filter-option" data-medida="35">
-          <input type="checkbox"> 35
-        </label>
-        <label class="filter-option" data-medida="40">
-          <input type="checkbox"> 40
-        </label>
-        <label class="filter-option" data-medida="45">
-          <input type="checkbox"> 45
-        </label>
-        <label class="filter-option" data-medida="50">
-          <input type="checkbox"> 50
-        </label>
-        <label class="filter-option" data-medida="60">
-          <input type="checkbox"> 60
-        </label>
-        <label class="filter-option" data-medida="70">
-          <input type="checkbox"> 70
-        </label>
-        <label class="filter-option" data-medida="80">
-          <input type="checkbox"> 80
-        </label>
-        <label class="filter-option" data-medida="90">
-          <input type="checkbox"> 90
-        </label>
-        <label class="filter-option" data-medida="100">
-          <input type="checkbox"> 100
-        </label>
-        <label class="filter-option" data-medida="120">
-          <input type="checkbox"> 120
-        </label>
-        <button class="btn-limpiar" id="limpiarAnchos">✕ Limpiar filtros de ancho</button>
+        <h3>Acabado de puerta</h3>
+        <label class="filter-option"><input type="checkbox"> Venecia PET</label>
+        <label class="filter-option"><input type="checkbox"> Laminado</label>
+        <label class="filter-option"><input type="checkbox"> Laca</label>
+        <label class="filter-option"><input type="checkbox"> Madera</label>
       </div>
-
-      <!-- FILTRO 3: ACABADO PUERTA -->
       <div class="filter-group">
-        <h3>Acabado puerta</h3>
-        <label class="filter-option" data-acabado="Venecia PET Blanco Mate">
-          <input type="checkbox" checked> Venecia PET
-        </label>
-        <label class="filter-option" data-acabado="Laminado">
-          <input type="checkbox"> Laminado
-        </label>
-        <label class="filter-option" data-acabado="Laca">
-          <input type="checkbox"> Laca
-        </label>
-        <label class="filter-option" data-acabado="Madera">
-          <input type="checkbox"> Madera
-        </label>
+        <h3>Ancho</h3>
+        <label class="filter-option"><input type="checkbox"> 30–45 cm</label>
+        <label class="filter-option"><input type="checkbox"> 50–60 cm</label>
+        <label class="filter-option"><input type="checkbox"> 70–90 cm</label>
       </div>
-
-      <!-- BOTÓN LIMPIAR TODO -->
-      <button class="btn-limpiar" id="limpiarTodo">✕ Limpiar todos los filtros</button>
     </aside>
 
     <main>
       <div class="toolbar">
-        <span id="totalModulos">Cargando...</span>
-        <div>
-          <label for="ordenSelect" style="margin-right:6px;">Ordenar:</label>
-          <select id="ordenSelect">
-            <option value="ancho_asc">Ancho (menor a mayor)</option>
-            <option value="ancho_desc">Ancho (mayor a menor)</option>
-            <option value="precio_asc">Precio (menor a mayor)</option>
-            <option value="precio_desc">Precio (mayor a menor)</option>
-          </select>
-        </div>
+        <span>6 módulos</span>
+        <span>Ordenar por: relevancia</span>
       </div>
 
-      <div class="product-grid" id="productGrid">
-        <!-- Las tarjetas se generan con JavaScript -->
+      <div class="product-grid">
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <span class="card-badge">Más pedido</span>
+            <img src="img/venecia-grafito-mate.jpg" alt="Módulo bajo de 1 puerta 60cm en acabado Venecia">
+          </div>
+          <div class="card-cat">Módulo bajo</div>
+          <div class="card-name">Bajo 1 puerta 60cm</div>
+          <div class="card-specs">Venecia PET · Casco 19mm</div>
+          <div class="card-foot">
+            <div class="card-price">189€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <img src="img/atenas-blanco.jpg" alt="Módulo bajo de 3 cajones 60cm">
+          </div>
+          <div class="card-cat">Módulo bajo</div>
+          <div class="card-name">Bajo 3 cajones 60cm</div>
+          <div class="card-specs">Venecia PET · Blum MERIVOBOX</div>
+          <div class="card-foot">
+            <div class="card-price">245€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <img src="img/verona-nogal.jpg" alt="Módulo bajo de 2 puertas 80cm">
+          </div>
+          <div class="card-cat">Módulo bajo</div>
+          <div class="card-name">Bajo 2 puertas 80cm</div>
+          <div class="card-specs">Venecia PET · Casco 19mm</div>
+          <div class="card-foot">
+            <div class="card-price">239€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <img src="img/gris-piedra.jpg" alt="Módulo alto de 1 puerta 60cm">
+          </div>
+          <div class="card-cat">Módulo alto</div>
+          <div class="card-name">Alto 1 puerta 60cm</div>
+          <div class="card-specs">Venecia PET · Bisagra Blum</div>
+          <div class="card-foot">
+            <div class="card-price">142€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <img src="img/ultramatt.jpg" alt="Columna para horno de 60cm">
+          </div>
+          <div class="card-cat">Columna</div>
+          <div class="card-name">Columna horno 60cm</div>
+          <div class="card-specs">Venecia PET · Altura 1900mm</div>
+          <div class="card-foot">
+            <div class="card-price">398€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
+        <a href="producto.html" class="card">
+          <div class="card-media">
+            <img src="img/verde-fiordo.jpg" alt="Módulo bajo de rincón 90cm">
+          </div>
+          <div class="card-cat">Módulo bajo</div>
+          <div class="card-name">Bajo rincón 90cm</div>
+          <div class="card-specs">Venecia PET · Bisagra rincón 155°</div>
+          <div class="card-foot">
+            <div class="card-price">312€ <span>+IVA</span></div>
+            <button class="card-add">Añadir</button>
+          </div>
+        </a>
+
       </div>
 
       <div class="cross-sell">
-        <p><strong>¿Ya tienes tus módulos?</strong> No olvides los zócalos, costados vistos y regletas de compensación que necesitarás para la instalación.</p>
-        <a href="#">Ver accesorios →</a>
+        <p><strong>¿Ya tienes tus módulos?</strong> No olvides los zócalos, costados vistos y regletas de compensación que necesitarás para completar la composición.</p>
+        <a href="#">Ver accesorios</a>
       </div>
 
       <div class="design-cta">
         <div>
           <h3>¿Prefieres un proyecto a medida?</h3>
-          <p>Diseñamos tu cocina completa con planos y presupuesto cerrado, a partir de tus medidas.</p>
+          <p>Nuestro equipo diseña tu cocina completa con planos y presupuesto cerrado, a partir de tus medidas.</p>
         </div>
         <a href="diseno-3d.html" class="btn">Pedir diseño 3D</a>
       </div>
@@ -283,261 +259,6 @@
     © 2026 CocinaDirecta. Venta directa de módulos de cocina, puertas y accesorios.
   </div>
 </footer>
-
-<script>
-  // Configurar Supabase
-  const supabaseUrl = 'https://kvlmvbrfatinalmymeai.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bG12YnJmYXRpbmFsbXltZWFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTU3MTcsImV4cCI6MjEwMjc5MTcxN30.3BGK1YoEoWZD81z7umopAYmpPa6K4rUhMz1OL1N-1l4';
-  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-  // Mapeo de tipo a categoría legible
-  const tipoMap = {
-    'bajo': 'Módulo bajo',
-    'alto': 'Módulo alto',
-    'columna': 'Columna',
-    'semicolumna': 'Semicolumna',
-    'sobreencimera': 'Sobreencimera'
-  };
-
-  // Variables globales
-  let todosLosModulos = [];
-  let filtroTipoActual = 'bajo';
-  let filtroAcabadoActual = 'Venecia PET Blanco Mate';
-  let filtroMedidasActuales = [];
-  let ordenActual = 'ancho_asc';
-
-  // Función para ordenar
-  function ordenarModulos(modulos, orden) {
-    const copy = [...modulos];
-    switch(orden) {
-      case 'ancho_asc':
-        return copy.sort((a, b) => a.ancho_cm - b.ancho_cm);
-      case 'ancho_desc':
-        return copy.sort((a, b) => b.ancho_cm - a.ancho_cm);
-      case 'precio_asc':
-        return copy.sort((a, b) => a.precio_base - b.precio_base);
-      case 'precio_desc':
-        return copy.sort((a, b) => b.precio_base - a.precio_base);
-      default:
-        return copy;
-    }
-  }
-
-  // Función para pintar los módulos
-  function pintarModulos(modulos) {
-    const grid = document.getElementById('productGrid');
-    const totalSpan = document.getElementById('totalModulos');
-    grid.innerHTML = '';
-    totalSpan.textContent = modulos.length + ' módulos';
-
-    modulos.forEach(modulo => {
-      const precioVenta = Math.round(modulo.precio_base);
-      const badge = modulo.destacado ? '<span class="card-badge">Más pedido</span>' : '';
-      const numPuertas = modulo.nombre.includes('2 puertas') ? '2' : '1';
-
-      let svg = '';
-      if (modulo.tipo === 'bajo') {
-        if (numPuertas === '1') {
-          svg = `<svg viewBox="0 0 100 100"><rect x="30" y="15" width="40" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-        } else {
-          svg = `<svg viewBox="0 0 100 100"><rect x="18" y="15" width="64" height="70" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="85" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><circle cx="46" cy="50" r="1.5" fill="#1C1B19"/><circle cx="54" cy="50" r="1.5" fill="#1C1B19"/></svg>`;
-        }
-      } else if (modulo.tipo === 'alto') {
-        if (numPuertas === '1') {
-          svg = `<svg viewBox="0 0 100 100"><rect x="30" y="10" width="40" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-        } else {
-          svg = `<svg viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="80" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-        }
-      } else {
-        svg = `<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="2" fill="none" stroke="#1C1B19" stroke-width="1.5"/><line x1="28" y1="35" x2="72" y2="35" stroke="#1C1B19" stroke-width="1" opacity="0.4"/><line x1="28" y1="62" x2="72" y2="62" stroke="#1C1B19" stroke-width="1" opacity="0.4"/></svg>`;
-      }
-
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <a href="producto.html?id=${modulo.id}" style="display:block;color:inherit;text-decoration:none;">
-          <div class="card-media">
-            ${badge}
-            ${svg}
-          </div>
-          <div class="card-body">
-            <div class="card-cat">${tipoMap[modulo.tipo] || modulo.tipo}</div>
-            <div class="card-name">${modulo.nombre}</div>
-            <div class="card-specs">Venecia PET · ${modulo.ancho_cm}×${modulo.alto_cm}×${modulo.fondo_cm}cm</div>
-            <div class="card-foot">
-              <div class="card-price">${precioVenta}€ <span>+IVA</span></div>
-              <button class="card-add" onclick="event.preventDefault(); alert('Añadir al carrito: ${modulo.nombre}');">Añadir</button>
-            </div>
-          </div>
-        </a>
-      `;
-
-      grid.appendChild(card);
-    });
-  }
-
-  // Función principal para cargar módulos
-  async function cargarCatalogo() {
-    const { data, error } = await supabase
-      .from('modulos')
-      .select('*');
-
-    if (error) {
-      console.error('Error al cargar módulos:', error);
-      document.getElementById('totalModulos').textContent = 'Error al cargar';
-      return;
-    }
-
-    todosLosModulos = data;
-    aplicarFiltrosYOrden();
-  }
-
-  // Función para aplicar filtros y orden
-  function aplicarFiltrosYOrden() {
-    let filtrados = todosLosModulos;
-
-    // Filtrar por tipo
-    if (filtroTipoActual) {
-      filtrados = filtrados.filter(m => m.tipo === filtroTipoActual);
-    }
-
-    // Filtrar por acabado
-    if (filtroAcabadoActual) {
-      filtrados = filtrados.filter(m => m.acabado_puerta === filtroAcabadoActual);
-    }
-
-    // Filtrar por medidas (múltiple)
-    if (filtroMedidasActuales.length > 0) {
-      filtrados = filtrados.filter(m => filtroMedidasActuales.includes(m.ancho_cm.toString()));
-    }
-
-    // Ordenar
-    filtrados = ordenarModulos(filtrados, ordenActual);
-
-    pintarModulos(filtrados);
-  }
-
-  // --- EVENT LISTENERS ---
-
-  // Tipo de módulo (selección única)
-  document.querySelectorAll('.filter-option[data-tipo]').forEach(label => {
-    const checkbox = label.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', function(e) {
-      document.querySelectorAll('.filter-option[data-tipo]').forEach(lbl => {
-        if (lbl !== label) {
-          lbl.querySelector('input[type="checkbox"]').checked = false;
-          lbl.classList.remove('active-cat');
-        }
-      });
-
-      if (this.checked) {
-        label.classList.add('active-cat');
-        filtroTipoActual = label.dataset.tipo;
-      } else {
-        label.classList.remove('active-cat');
-        const algunoChecked = document.querySelector('.filter-option[data-tipo] input[type="checkbox"]:checked');
-        if (!algunoChecked) {
-          filtroTipoActual = null;
-        } else {
-          const checkedLabel = document.querySelector('.filter-option[data-tipo].active-cat');
-          filtroTipoActual = checkedLabel ? checkedLabel.dataset.tipo : null;
-        }
-      }
-      aplicarFiltrosYOrden();
-    });
-  });
-
-  // Ancho (selección múltiple) - AHORA ANTES DE ACABADO
-  document.querySelectorAll('.filter-option[data-medida]').forEach(label => {
-    const checkbox = label.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', function(e) {
-      const medida = label.dataset.medida;
-      if (this.checked) {
-        if (!filtroMedidasActuales.includes(medida)) {
-          filtroMedidasActuales.push(medida);
-        }
-      } else {
-        filtroMedidasActuales = filtroMedidasActuales.filter(m => m !== medida);
-      }
-      aplicarFiltrosYOrden();
-    });
-  });
-
-  // Acabado (selección única)
-  document.querySelectorAll('.filter-option[data-acabado]').forEach(label => {
-    const checkbox = label.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', function(e) {
-      document.querySelectorAll('.filter-option[data-acabado]').forEach(lbl => {
-        if (lbl !== label) {
-          lbl.querySelector('input[type="checkbox"]').checked = false;
-        }
-      });
-
-      if (this.checked) {
-        filtroAcabadoActual = label.dataset.acabado;
-      } else {
-        const algunoChecked = document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked');
-        filtroAcabadoActual = algunoChecked ? document.querySelector('.filter-option[data-acabado] input[type="checkbox"]:checked').closest('.filter-option').dataset.acabado : null;
-      }
-      aplicarFiltrosYOrden();
-    });
-  });
-
-  // Botón limpiar filtros de ancho
-  document.getElementById('limpiarAnchos').addEventListener('click', function() {
-    document.querySelectorAll('.filter-option[data-medida] input[type="checkbox"]').forEach(cb => {
-      cb.checked = false;
-    });
-    filtroMedidasActuales = [];
-    aplicarFiltrosYOrden();
-  });
-
-  // Botón limpiar TODOS los filtros
-  document.getElementById('limpiarTodo').addEventListener('click', function() {
-    // Resetear tipo
-    document.querySelectorAll('.filter-option[data-tipo]').forEach(lbl => {
-      lbl.querySelector('input[type="checkbox"]').checked = false;
-      lbl.classList.remove('active-cat');
-    });
-    const bajoLabel = document.querySelector('.filter-option[data-tipo="bajo"]');
-    if (bajoLabel) {
-      bajoLabel.querySelector('input[type="checkbox"]').checked = true;
-      bajoLabel.classList.add('active-cat');
-      filtroTipoActual = 'bajo';
-    } else {
-      filtroTipoActual = null;
-    }
-
-    // Resetear acabado
-    document.querySelectorAll('.filter-option[data-acabado]').forEach(lbl => {
-      lbl.querySelector('input[type="checkbox"]').checked = false;
-    });
-    const veneciaLabel = document.querySelector('.filter-option[data-acabado="Venecia PET Blanco Mate"]');
-    if (veneciaLabel) {
-      veneciaLabel.querySelector('input[type="checkbox"]').checked = true;
-      filtroAcabadoActual = 'Venecia PET Blanco Mate';
-    } else {
-      filtroAcabadoActual = null;
-    }
-
-    // Resetear medidas de ancho
-    document.querySelectorAll('.filter-option[data-medida] input[type="checkbox"]').forEach(cb => {
-      cb.checked = false;
-    });
-    filtroMedidasActuales = [];
-
-    aplicarFiltrosYOrden();
-  });
-
-  // Event listener para el selector de orden
-  document.getElementById('ordenSelect').addEventListener('change', function() {
-    ordenActual = this.value;
-    aplicarFiltrosYOrden();
-  });
-
-  // Iniciar
-  document.addEventListener('DOMContentLoaded', cargarCatalogo);
-</script>
 
 </body>
 </html>
