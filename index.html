@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CocinaDirecta — Módulos de cocina de fábrica</title>
+<title>CocinaDirecta — Módulos de cocina directos de fábrica</title>
+<meta name="description" content="Módulos de cocina completos con casco de 19mm, puerta y herrajes de marca bajo una sola referencia. Venta directa de fábrica, en caja o armados.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F2EFE8;
+    --paper-dim:#E8E3D6;
     --ink:#1F1E1A;
     --brass:#9A6E42;
     --line: rgba(31,30,26,0.14);
@@ -23,7 +25,7 @@
   img{display:block;width:100%;height:100%;object-fit:cover;}
   .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
 
-  /* NAV — sobre la foto, blanca, sin fondo: deja respirar la imagen */
+  /* ---------- NAV sobre la foto ---------- */
   header{position:absolute;top:0;left:0;right:0;z-index:10;}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff;}
   .logo{font-family:'Fraunces',serif;font-size:19px;}
@@ -34,95 +36,99 @@
   .nav-right{display:flex;align-items:center;gap:20px;font-size:13px;}
   .nav-right .cart{border:1px solid var(--line-light);padding:9px 18px;}
 
-  /* HERO — foto a sangre, texto abajo a la izquierda, degradado solo donde hay texto */
+  /* ---------- HERO ---------- */
   .hero{position:relative;height:88vh;min-height:600px;}
   .hero-img{position:absolute;inset:0;}
-  .hero-shade{position:absolute;inset:0;background:linear-gradient(to top, rgba(20,19,16,0.62) 0%, rgba(20,19,16,0.18) 40%, rgba(20,19,16,0.10) 100%);}
+  .hero-shade{position:absolute;inset:0;background:linear-gradient(to top, rgba(20,19,16,0.64) 0%, rgba(20,19,16,0.20) 42%, rgba(20,19,16,0.12) 100%);}
   .hero-copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:56px;color:#fff;}
-  .hero-copy h1{font-size:clamp(32px,4.2vw,54px);line-height:1.08;font-weight:380;max-width:16ch;}
-  .hero-copy p{margin-top:18px;font-size:16px;max-width:44ch;color:rgba(255,255,255,0.82);}
-  .hero-actions{margin-top:30px;display:flex;gap:24px;align-items:center;}
+  .hero-copy h1{font-size:clamp(32px,4.2vw,54px);line-height:1.08;font-weight:380;max-width:17ch;}
+  .hero-copy p{margin-top:18px;font-size:16px;max-width:46ch;color:rgba(255,255,255,0.82);}
+  .hero-actions{margin-top:30px;display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
   .btn-light{background:#fff;color:var(--ink);padding:15px 30px;font-size:14px;font-weight:500;}
   .btn-outline{border-bottom:1px solid rgba(255,255,255,0.6);padding-bottom:3px;font-size:13.5px;color:#fff;}
 
-  /* ACABADOS — galería a sangre completa, sin márgenes: aquí es donde la foto manda */
-  .finishes{padding:96px 0 0;}
-  .finishes-head{max-width:560px;margin-bottom:44px;}
-  .finishes-head h2{font-size:30px;}
-  .finishes-head p{margin-top:12px;font-size:15px;color:rgba(31,30,26,0.66);}
+  /* ---------- DIAGRAMA DE REFERENCIA ---------- */
+  .reference{border-bottom:1px solid var(--line);padding:64px 0;}
+  .ref-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:16px;max-width:820px;}
+  .ref-piece{border-top:1px solid var(--brass);padding-top:14px;}
+  .ref-piece .n{font-family:'Fraunces',serif;font-size:19px;margin-bottom:3px;}
+  .ref-piece .d{font-size:12.5px;color:rgba(31,30,26,0.6);}
+  .ref-plus{font-family:'Fraunces',serif;font-size:20px;color:var(--brass);padding-top:14px;}
+  .ref-equals{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);max-width:820px;}
+  .ref-equals .n{font-family:'Fraunces',serif;font-size:22px;margin-bottom:4px;}
+  .ref-equals .d{font-size:14px;color:rgba(31,30,26,0.65);}
 
+  /* ---------- SECCIONES GENERALES ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:600px;margin-bottom:48px;}
+  .section-head h2{font-size:30px;}
+  .section-head p{margin-top:12px;font-size:15px;color:rgba(31,30,26,0.66);}
+
+  /* ---------- FLUJO ---------- */
+  .flow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+  .flow-step .step-n{font-size:12.5px;color:var(--brass);margin-bottom:12px;}
+  .flow-step h3{font-size:19px;margin-bottom:8px;}
+  .flow-step p{font-size:14px;color:rgba(31,30,26,0.66);}
+
+  /* ---------- ACABADOS ---------- */
   .fin-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;}
   .fin-col{display:grid;gap:16px;}
   .fin-item{position:relative;overflow:hidden;}
   .fin-item.tall{aspect-ratio:4/5;}
   .fin-item.wide{aspect-ratio:16/9;}
-  .fin-item.square{aspect-ratio:1/1;}
   .fin-item img{transition:transform .6s cubic-bezier(.2,.6,.2,1);}
   .fin-item:hover img{transform:scale(1.03);}
-  .fin-cap{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,0.4);}
+  .fin-cap{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,0.45);}
   .fin-cap .n{font-family:'Fraunces',serif;font-size:19px;}
   .fin-cap .d{font-size:12px;opacity:0.85;margin-top:2px;}
 
-  /* CATÁLOGO — tienda real, con foto de acabado y precio */
-  .catalog{padding:100px 0;}
-  .catalog-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:32px;}
-  .catalog-head h2{font-size:30px;}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;}
-  .chip{font-size:12.5px;padding:8px 16px;border:1px solid var(--line);color:rgba(31,30,26,0.7);cursor:pointer;}
-  .chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  /* ---------- PARTICULARES / PROFESIONALES ---------- */
+  .audience-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .audience-card{background:var(--paper);padding:36px 34px;}
+  .audience-card h3{font-size:21px;margin-bottom:10px;}
+  .audience-card p{font-size:14.5px;color:rgba(31,30,26,0.68);margin-bottom:18px;}
+  .audience-card .tag{font-size:12px;color:var(--brass);border-bottom:1px solid var(--brass);padding-bottom:2px;}
 
-  .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
-  .prod{cursor:pointer;}
-  .prod-media{aspect-ratio:1/1;overflow:hidden;margin-bottom:14px;background:#E4DED0;}
-  .prod-media img{transition:transform .6s cubic-bezier(.2,.6,.2,1);}
-  .prod:hover .prod-media img{transform:scale(1.04);}
-  .prod .cat{font-size:11.5px;color:rgba(31,30,26,0.5);margin-bottom:5px;}
-  .prod .name{font-family:'Fraunces',serif;font-size:16.5px;margin-bottom:5px;}
-  .prod .spec{font-size:12px;color:var(--brass);margin-bottom:12px;}
-  .prod-foot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:10px;}
-  .prod-price{font-family:'Fraunces',serif;font-size:17px;}
-  .prod-price small{font-size:11px;color:rgba(31,30,26,0.5);font-family:'Inter',sans-serif;font-weight:400;}
-  .prod-add{font-size:12px;color:var(--brass);border-bottom:1px solid var(--brass);padding-bottom:2px;}
-
-  .catalog-foot{text-align:center;margin-top:52px;}
-  .catalog-foot a{font-size:13.5px;border-bottom:1px solid var(--ink);padding-bottom:3px;}
-
-  /* CALIDAD — banda oscura con foto de fondo, datos técnicos encima */
-  .quality{position:relative;padding:110px 0;color:#fff;}
-  .quality-img{position:absolute;inset:0;}
-  .quality-shade{position:absolute;inset:0;background:rgba(20,19,16,0.66);}
-  .quality-inner{position:relative;}
-  .quality h2{font-size:30px;max-width:20ch;margin-bottom:44px;}
-  .q-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-light);border-top:1px solid var(--line-light);border-bottom:1px solid var(--line-light);}
-  .q-item{padding:30px 28px;}
-  .q-item .k{font-family:'Fraunces',serif;font-size:26px;margin-bottom:8px;}
-  .q-item .d{font-size:13.5px;color:rgba(255,255,255,0.72);}
-
-  /* PROCESO */
-  .process{padding:96px 0;}
-  .process h2{font-size:30px;margin-bottom:44px;max-width:20ch;}
-  .p-row{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
-  .p-item .n{font-size:12.5px;color:var(--brass);margin-bottom:12px;}
-  .p-item h3{font-size:19px;margin-bottom:8px;}
-  .p-item p{font-size:14px;color:rgba(31,30,26,0.66);}
-
-  .notice{border-top:1px solid var(--line);padding:50px 0;}
-  .notice p{font-size:14.5px;color:rgba(31,30,26,0.7);max-width:62ch;}
+  .notice{display:flex;gap:16px;align-items:flex-start;background:var(--paper-dim);border:1px solid var(--line);padding:24px 28px;margin-top:24px;}
+  .notice .mark{font-family:'Fraunces',serif;font-size:18px;color:var(--brass);flex-shrink:0;line-height:1.3;}
+  .notice p{font-size:14.5px;color:rgba(31,30,26,0.72);}
   .notice strong{color:var(--ink);}
+  .notice a{border-bottom:1px solid var(--brass);}
+
+  /* ---------- CALIDAD (banda oscura con foto) ---------- */
+  .quality{position:relative;padding:104px 0;color:#fff;}
+  .quality-img{position:absolute;inset:0;}
+  .quality-shade{position:absolute;inset:0;background:rgba(20,19,16,0.72);}
+  .quality-inner{position:relative;}
+  .quality .section-head h2{color:#fff;}
+  .quality .section-head p{color:rgba(255,255,255,0.7);}
+  .q-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-light);border-top:1px solid var(--line-light);border-bottom:1px solid var(--line-light);}
+  .q-item{padding:32px 28px;}
+  .q-item .k{font-family:'Fraunces',serif;font-size:22px;margin-bottom:10px;}
+  .q-item .d{font-size:13.5px;color:rgba(255,255,255,0.72);margin-bottom:16px;}
+  .q-item .tag{font-size:11.5px;color:rgba(255,255,255,0.55);}
+
+  /* ---------- CIERRE ---------- */
+  .closing{padding:88px 0;text-align:center;border-top:1px solid var(--line);}
+  .closing h2{font-size:29px;margin-bottom:16px;}
+  .closing p{font-size:15px;color:rgba(31,30,26,0.66);max-width:52ch;margin:0 auto 30px;}
+  .btn-dark{display:inline-block;background:var(--ink);color:var(--paper);padding:15px 32px;font-size:14px;}
 
   footer{border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:rgba(31,30,26,0.5);}
 
   @media (max-width:1000px){
-    .prod-grid{grid-template-columns:repeat(2,1fr);}
+    .flow-grid{grid-template-columns:1fr;gap:30px;}
     .fin-grid{grid-template-columns:1fr;}
+    .audience-grid{grid-template-columns:1fr;}
     .q-row{grid-template-columns:1fr;}
-    .p-row{grid-template-columns:1fr;gap:30px;}
+    .ref-row{grid-template-columns:1fr;gap:20px;}
+    .ref-plus{display:none;}
     .nav-links{display:none;}
     .hero{height:78vh;}
   }
   @media (max-width:560px){
     .wrap{padding:0 22px;}
-    .prod-grid{grid-template-columns:1fr;}
+    section{padding:66px 0;}
   }
   :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 </style>
@@ -131,151 +137,169 @@
 
 <header>
   <div class="wrap nav">
-    <a href="#" class="logo">Cocina<em>Directa</em></a>
+    <a href="index.html" class="logo">Cocina<em>Directa</em></a>
     <nav class="nav-links">
-      <a href="#catalogo">Catálogo</a>
-      <a href="#acabados">Acabados</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="#flujo">Cómo funciona</a>
       <a href="#calidad">Calidad</a>
-      <a href="#">Diseño 3D</a>
+      <a href="diseno-3d.html">Diseño 3D</a>
     </nav>
     <div class="nav-right">
-      <a href="#">Mi cuenta</a>
-      <a href="#" class="cart">Carrito (0)</a>
+      <a href="catalogo.html">Ver catálogo</a>
+      <a href="catalogo.html" class="cart">Carrito (0)</a>
     </div>
   </div>
 </header>
 
 <div class="hero">
-  <div class="hero-img"><img src="img/cocina-hueso-roble.jpg" alt="Cocina en acabado hueso y roble antracita"></div>
+  <div class="hero-img"><img src="img/cocina-hueso-roble.jpg" alt="Cocina montada con módulos en acabado hueso y roble antracita"></div>
   <div class="hero-shade"></div>
   <div class="hero-copy">
     <div class="wrap">
-      <h1>Módulos de cocina, directos de fábrica.</h1>
-      <p>Casco de 19mm, puerta a tu elección y herrajes de marca bajo una sola referencia. Con precio cerrado desde el catálogo.</p>
+      <h1>La cocina que se adapta a cómo vives, con la calidad de fábrica.</h1>
+      <p>Elige los módulos que necesitas, ya completos con puertas y herrajes. Decide si los quieres armados de fábrica o en caja. Te llegan a la obra o a casa.</p>
       <div class="hero-actions">
-        <a href="#catalogo" class="btn-light">Ver catálogo</a>
-        <a href="#calidad" class="btn-outline">Cómo se fabrica</a>
+        <a href="catalogo.html" class="btn-light">Explorar módulos</a>
+        <a href="#flujo" class="btn-outline">Ver cómo funciona</a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="wrap finishes" id="acabados">
-  <div class="finishes-head">
-    <h2>Acabados</h2>
-    <p>El mismo módulo, en el frente que encaje con tu cocina. Todos se piden igual y llegan con el mismo casco.</p>
-  </div>
-  <div class="fin-grid">
-    <div class="fin-item tall">
-      <img src="img/venecia-grafito-mate.jpg" alt="Acabado Venecia grafito mate">
-      <div class="fin-cap"><div class="n">Venecia grafito mate</div><div class="d">Antihuellas · tirador integrado</div></div>
+<div class="reference">
+  <div class="wrap">
+    <div class="ref-row">
+      <div class="ref-piece"><div class="n">Casco</div><div class="d">19mm de grosor</div></div>
+      <div class="ref-plus">+</div>
+      <div class="ref-piece"><div class="n">Frente</div><div class="d">Acabado a elegir</div></div>
+      <div class="ref-plus">+</div>
+      <div class="ref-piece"><div class="n">Herrajes</div><div class="d">Bisagras y guías</div></div>
     </div>
-    <div class="fin-col">
-      <div class="fin-item wide">
-        <img src="img/verona-nogal.jpg" alt="Acabado Verona nogal">
-        <div class="fin-cap"><div class="n">Verona nogal</div><div class="d">Veta natural en alto brillo</div></div>
-      </div>
-      <div class="fin-item wide">
-        <img src="img/verde-fiordo.jpg" alt="Acabado laminado verde fiordo">
-        <div class="fin-cap"><div class="n">Verde fiordo</div><div class="d">Laminado mate</div></div>
-      </div>
+    <div class="ref-equals">
+      <div class="n">Todo incluido en un solo precio</div>
+      <div class="d">No hay que comprar cada pieza por separado.</div>
     </div>
   </div>
 </div>
 
-<div class="wrap catalog" id="catalogo">
-  <div class="catalog-head">
-    <h2>Catálogo de módulos</h2>
-    <div class="filters">
-      <span class="chip active">Todos</span>
-      <span class="chip">Bajos</span>
-      <span class="chip">Altos</span>
-      <span class="chip">Columnas</span>
+<section id="flujo">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>El pedido, en tres decisiones</h2>
+      <p>Nada se decide por ti. Cada paso queda a la vista antes de pagar.</p>
+    </div>
+    <div class="flow-grid">
+      <div class="flow-step">
+        <div class="step-n">Paso uno</div>
+        <h3>Elige tus módulos</h3>
+        <p>Añade al carrito los módulos que necesitas del catálogo, con precio cerrado desde el primer momento.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-n">Paso dos</div>
+        <h3>Elige cómo lo recibes</h3>
+        <p>Paletizado en caja para armarlo tú, o ya armado de fábrica si prefieres ahorrarte horas de obra. Tú eliges antes de pagar.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-n">Paso tres</div>
+        <h3>Recíbelo en obra</h3>
+        <p>Fabricación bajo pedido en nuestra fábrica asociada. Plazo estimado de 60 días desde la confirmación del pago.</p>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="prod-grid">
-    <div class="prod">
-      <div class="prod-media"><img src="img/venecia-grafito-mate.jpg" alt="Módulo bajo 60cm"></div>
-      <div class="cat">Módulo bajo</div>
-      <div class="name">Bajo 60cm, 1 puerta</div>
-      <div class="spec">Casco 19mm · Venecia</div>
-      <div class="prod-foot"><div class="prod-price">189€ <small>desde</small></div><span class="prod-add">Ver</span></div>
+<section id="acabados">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Acabados</h2>
+      <p>El mismo módulo, en el frente que encaje con tu cocina. Todos se piden igual y llegan con el mismo casco.</p>
     </div>
-    <div class="prod">
-      <div class="prod-media"><img src="img/atenas-blanco.jpg" alt="Módulo bajo 80cm"></div>
-      <div class="cat">Módulo bajo</div>
-      <div class="name">Bajo 80cm, 2 puertas</div>
-      <div class="spec">Casco 19mm · Venecia</div>
-      <div class="prod-foot"><div class="prod-price">239€ <small>desde</small></div><span class="prod-add">Ver</span></div>
-    </div>
-    <div class="prod">
-      <div class="prod-media"><img src="img/gris-piedra.jpg" alt="Módulo alto 60cm"></div>
-      <div class="cat">Módulo alto</div>
-      <div class="name">Alto 60cm, 1 puerta</div>
-      <div class="spec">Casco 19mm · Venecia</div>
-      <div class="prod-foot"><div class="prod-price">165€ <small>desde</small></div><span class="prod-add">Ver</span></div>
-    </div>
-    <div class="prod">
-      <div class="prod-media"><img src="img/ultramatt.jpg" alt="Columna despensero 40cm"></div>
-      <div class="cat">Columna</div>
-      <div class="name">Despensero 40cm</div>
-      <div class="spec">Casco 19mm · Venecia</div>
-      <div class="prod-foot"><div class="prod-price">349€ <small>desde</small></div><span class="prod-add">Ver</span></div>
+    <div class="fin-grid">
+      <div class="fin-item tall">
+        <img src="img/venecia-grafito-mate.jpg" alt="Cocina con frentes en acabado Venecia grafito mate">
+        <div class="fin-cap"><div class="n">Venecia grafito mate</div><div class="d">Antihuellas · tirador integrado</div></div>
+      </div>
+      <div class="fin-col">
+        <div class="fin-item wide">
+          <img src="img/verona-nogal.jpg" alt="Cocina con frentes en acabado Verona nogal">
+          <div class="fin-cap"><div class="n">Verona nogal</div><div class="d">Veta natural en alto brillo</div></div>
+        </div>
+        <div class="fin-item wide">
+          <img src="img/verde-fiordo.jpg" alt="Cocina con frentes en acabado laminado verde fiordo">
+          <div class="fin-cap"><div class="n">Verde fiordo</div><div class="d">Laminado mate</div></div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="catalog-foot">
-    <a href="#">Ver todo el catálogo</a>
+<section id="profesionales">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Venta directa de módulos, sin intermediarios</h2>
+      <p>El mismo catálogo, dos formas de recibir cada módulo.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>Particulares</h3>
+        <p>Calidad de fábrica al precio de venta directa. Recibe cada módulo paletizado en caja, listo para que tú o tu instalador lo coloquéis en la cocina.</p>
+        <span class="tag">Módulo en caja</span>
+      </div>
+      <div class="audience-card">
+        <h3>Profesionales</h3>
+        <p>Paletas, lampistas y reformistas: pide el módulo ya armado de fábrica como pieza y ahórrate ese tiempo en obra. La colocación final en la cocina sigue corriendo de tu parte.</p>
+        <span class="tag">Módulo armado de fábrica</span>
+      </div>
+    </div>
+    <div class="notice">
+      <div class="mark">i</div>
+      <p><strong>¿Dudas de medidas o un proyecto a medida?</strong> Vendemos módulos, no el servicio de instalación. Si necesitas ayuda con cotas, cantidades o un proyecto personalizado, <a href="diseno-3d.html">consulta con nuestros expertos</a> antes de pedir presupuesto.</p>
+    </div>
   </div>
-</div>
+</section>
 
 <div class="quality" id="calidad">
   <div class="quality-img"><img src="img/atenas-blanco.jpg" alt=""></div>
   <div class="quality-shade"></div>
   <div class="wrap quality-inner">
-    <h2>Calidad que se puede comprobar en la ficha</h2>
+    <div class="section-head">
+      <h2>Calidad que se puede comprobar, no solo prometer</h2>
+      <p>Estos son los materiales y herrajes reales con los que se fabrica cada módulo.</p>
+    </div>
     <div class="q-row">
       <div class="q-item">
-        <div class="k">19mm</div>
-        <div class="d">Paneles horizontales de 19mm, costados de 16mm y cantos vistos en ABS. Certificación TSCA CARB2.</div>
+        <div class="k">Puerta Venecia</div>
+        <div class="d">22mm de grosor, con cantos ABS microbiselados y tirador integrado, sin piezas sueltas que se enganchen. Acabado antihuellas, resistente al calor, a los químicos y al impacto.</div>
+        <div class="tag">Modelo más solicitado</div>
       </div>
       <div class="q-item">
-        <div class="k">Blum</div>
-        <div class="d">Bisagras Clip-top Blumotion de cierre suave. Cajones Blum o Grass, con guías de hasta 40kg.</div>
+        <div class="k">Estructura del módulo</div>
+        <div class="d">Estructura reforzada con paneles horizontales de 19mm para máxima resistencia y cero pandeo. Costados de 16mm y cantos vistos en ABS de 1mm. Baja emisión de formaldehído, con certificación TSCA CARB2.</div>
+        <div class="tag">Fabricación certificada</div>
       </div>
       <div class="q-item">
-        <div class="k">22mm</div>
-        <div class="d">Puerta Venecia con cantos microbiselados y acabado antihuellas resistente al calor y al impacto.</div>
+        <div class="k">Herrajes de marca</div>
+        <div class="d">Bisagras Blum Blumotion de cierre suave, cajones Blum MERIVOBOX o Grass NOVA PRO con guías de hasta 40kg de carga. Colgadores con sistema antivuelco, probados con 260kg de carga sostenida durante una semana.</div>
+        <div class="tag">Blum · Grass</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="wrap process">
-  <h2>El pedido, en tres decisiones</h2>
-  <div class="p-row">
-    <div class="p-item">
-      <div class="n">Primero</div>
-      <h3>Eliges los módulos</h3>
-      <p>Precio cerrado desde el catálogo, con casco, puerta y herrajes ya incluidos en la referencia.</p>
-    </div>
-    <div class="p-item">
-      <div class="n">Después</div>
-      <h3>Eliges el formato de entrega</h3>
-      <p>En caja para armarlo tú, o armado de fábrica como pieza si prefieres ahorrar tiempo de obra.</p>
-    </div>
-    <div class="p-item">
-      <div class="n">Y ya está</div>
-      <h3>Lo recibes en obra</h3>
-      <p>Fabricación bajo pedido en nuestra fábrica asociada. Plazo de ~60 días, visible antes de pagar.</p>
-    </div>
-  </div>
-</div>
-
-<div class="notice">
+<section>
   <div class="wrap">
-    <p><strong>Vendemos el módulo, no la instalación.</strong> Para dudas de medidas o un proyecto a medida, nuestro equipo lo revisa contigo antes de que pidas presupuesto.</p>
+    <div class="notice" style="margin-top:0;">
+      <div class="mark">i</div>
+      <p><strong>Fabricación bajo pedido — plazo de aproximadamente 60 días.</strong> No mantenemos stock genérico: cada pedido se produce específicamente para ti en nuestra fábrica asociada, y por eso el plazo se indica de forma clara antes de confirmar el pago, no en la letra pequeña.</p>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="wrap">
+    <h2>Empieza por el catálogo</h2>
+    <p>Módulos bajos, altos y columnas, cada uno con su ficha técnica completa y su precio.</p>
+    <a href="catalogo.html" class="btn-dark">Ver catálogo de módulos</a>
   </div>
 </div>
 
