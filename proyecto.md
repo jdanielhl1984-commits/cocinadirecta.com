@@ -3,7 +3,7 @@
 ## Modelo de negocio
 
 - **Propuesta de valor:** venta de módulos de cocina de alta calidad (particulares y profesionales — paletas, lampistas) como intermediario con fábrica.
-- **Margen comercial:** 45% de descuento/beneficio sobre PVP, este margen nunca lo debe ver el cliente porque es nuestra ganancia y nunca se debe descontar del precio final de la web ni ningún precio, es mas bien informativo internamente. *(Actualmente se muestran precios G06 sin margen)*
+- **Margen comercial:** 45% de descuento/beneficio sobre PVP.
 - **Fábrica:** Logisiete. Plazo de fabricación: ~60 días (debe mostrarse de forma visible en el checkout, no solo en condiciones legales).
 - **Formatos de entrega:**
   - Paletizado en caja — estándar, sin recargo. El cliente o su instalador lo monta.
@@ -13,10 +13,39 @@
 
 ## Arquitectura de la web
 
-- **Home:** propuesta de valor y explicación del flujo de compra.
-- **Catálogo:** módulos completos (cascos + frentes + herrajes bajo una misma referencia).
+- **Home (`index.html`):** propuesta de valor y explicación del flujo de compra.
+- **Catálogo (`catalogo.html`):** módulos completos (cascos + frentes + herrajes bajo una misma referencia).
+- **Ficha de producto (`producto.html`):** selector de color, medidas, detalle técnico.
+- **Diseño 3D (`diseno-3d.html`):** servicio de pago para proyectos a medida.
 - **Venta cruzada:** aviso en carrito para zócalos, costados vistos, regletas de compensación.
 - **Portal de transparencia de calidad:** grosor de cascos, herrajes, resistencia, acabados.
+
+### Anclas internas que NO deben cambiar
+`catalogo.html`, `producto.html` y `diseno-3d.html` enlazan a `index.html#flujo` e `index.html#calidad`. Si se renombran esos `id` en la home, se rompen los enlaces de las otras tres páginas.
+
+## Identidad visual (definida, aplicada en las 4 páginas)
+
+Tras descartar varias direcciones (piedra/latón editorial, taller nocturno, atelier tipográfico), la referencia acordada es **una mezcla de santos.es (estética señorial, fotografía a sangre, mucho silencio) y micocinaonline.com (estructura funcional de tienda: categorías, tarjetas con precio, CTA de compra)**. Conclusión clave del proceso: la sensación de web de gama alta la da la **fotografía**, no el layout — los bocetos sin foto real nunca llegaban al nivel buscado.
+
+**Tokens (idénticos en las 4 páginas):**
+- `--paper:#F2EFE8` · `--paper-dim:#E8E3D6` · `--ink:#1F1E1A` · `--brass:#9A6E42` · `--line: rgba(31,30,26,0.14)`
+- Tipografía: **Fraunces** (títulos, peso 400) + **Inter** (texto). Cargadas desde Google Fonts.
+- Logo: 30px de escritorio, 24px en móvil.
+- Sin esquinas redondeadas, sin sombras difusas, sin etiquetas en MAYÚSCULAS.
+
+**Reglas de legibilidad sobre foto (aprendidas por error):**
+- El texto blanco sobre render claro no se lee. Todo bloque de texto sobre fotografía necesita un degradado oscuro de apoyo (hasta 0,90–0,92 de opacidad en la base) **más** `text-shadow`.
+- Los rótulos de las fotos de acabado llevan un `::after` con degradado en el tercio inferior.
+
+## Fotografía
+
+- Renders del proveedor, guardados en la carpeta `img/` del repositorio.
+- **Los nombres de archivo originales incluían "LOG2020"** — renombrados para no exponer al proveedor en el código público. Regla: nombres en minúscula, sin espacios, sin acentos, separados por guiones.
+- GitHub Pages distingue mayúsculas de minúsculas: un desajuste entre el nombre del archivo y el del HTML deja un hueco sin error visible.
+- **Peso:** los originales pesan 19–28 MB. GitHub rechaza por web cualquier archivo de más de 25 MB, y para web hay que servir versiones de ~1400px y 120–160 KB. Guardar los originales aparte (sirven para imprimir, no para web).
+- Archivos en uso: `cocina-hueso-roble.jpg` (hero de la home), `venecia-grafito-mate.jpg`, `verona-nogal.jpg`, `verde-fiordo.jpg`, `atenas-blanco.jpg`, `gris-piedra.jpg`, `ultramatt.jpg`.
+- Quedan sin usar (para catálogo y fichas futuras): Venecia blanco brillo/mate, roble americano, ultragloss blanco/rojo, laminado fresno blanco, Verona abedul/caoba, y varias más.
+- **⚠️ Pendiente legal:** confirmar por escrito con Logisiete el derecho a usar comercialmente estos renders en la web.
 
 ## Flujo de compra
 
@@ -44,9 +73,7 @@
 
 ## Datos técnicos del proveedor (para catálogo y ficha de producto)
 
-- **⭐ Argumento de venta clave: paneles de 19mm.** La mayoría de módulos económicos del mercado son de 16mm. Este dato debe tenerse en cuenta como comparación (no solo como ficha técnica) en home, catálogo y fichas de producto — es el diferenciador más fuerte frente a la competencia barata.
-
-- ⭐ Argumento de venta clave: paneles de 19mm. Destacar la robustez de los 19 mm como estándar propio de alta gama, usando afirmaciones categóricas sobre nuestro producto (ej. "Estructura reforzada con paneles de 19 mm para máxima resistencia y cero pandeo") SIN mencionar directamente a marcas competidoras ni generalizar sobre el resto del mercado para evitar problemas de publicidad desleal.
+- **⭐ Argumento de venta clave: paneles de 19mm.** Destacar la robustez de los 19 mm como estándar propio de alta gama, usando afirmaciones categóricas sobre nuestro producto (ej. "Estructura reforzada con paneles de 19 mm para máxima resistencia y cero pandeo") SIN mencionar directamente a marcas competidoras ni generalizar sobre el resto del mercado, para evitar problemas de publicidad desleal. Debe aparecer en home, catálogo y fichas de producto.
 
 - **Puerta Venecia PET** (modelo principal, el más solicitado): 22mm de grosor, cantos ABS de 1mm microbiselados, tirador integrado, acabado antihuellas (PET), resistente a calor/químicos/impacto. Colores: Blanco Brillo/Mate, Grafito Brillo/Mate, Negro Mate, Gris Claro Mate, Cashmere Mate, Taupe Mate.
 - **Estructura de módulos (bajos y altos):** costados 16mm, paneles horizontales 19mm, trasera 8mm laminada dos caras, cantos vistos ABS 1mm, cantos ocultos 0.4mm melamínico. Baja emisión de formaldehído, certificación TSCA CARB2.
@@ -56,47 +83,9 @@
 ## Base de datos (Supabase)
 
 - Proyecto Supabase separado del de abrozon.
-- **Tabla `modulos`** con columnas: `id`, `created_at`, `nombre`, `tipo`, `precio_base` (DECIMAL(10,2)), `alto_cm`, `ancho_cm`, `fondo_cm`, `acabado_puerta`, `grosor_puerta_mm`, `destacado` (bool).
-- **Estado actual:** 23 módulos insertados con precios G06 (Venecia PET Blanco Mate).
+- **Tabla `modulos` creada** con columnas: `id`, `created_at`, `nombre`, `tipo`, `precio_base` (a revisar — el precio real depende de combinación estructura+puerta, no es un valor único), `alto_cm`, `ancho_cm`, `fondo_cm` (pendiente de pasar a mm para coincidir con el estándar de Logisiete), `acabado_puerta`, `colores_disponibles` (array), `destacado` (bool). Primera fila de prueba insertada: "Bajo 1 puerta 60cm".
 - **Pendiente:** rediseñar el modelo de precios como tabla relacionada (`modulos` + tabla `precios` por combinación de módulo × color de estructura × color de puerta), en vez de un campo `precio_base` único — decisión ya tomada, falta implementar.
-- **Convención de medidas:** alto × ancho × fondo, en cm (pendiente de pasar a mm para coincidir con el estándar de Logisiete).
-
-### Módulos actuales en base de datos:
-
-**Bajos 1 puerta (80cm altura):** 30, 35, 40, 45, 50, 60, 80cm  
-**Bajos 2 puertas (80cm altura):** 70, 80, 90, 100, 120cm  
-**Altos 1 puerta (70cm altura):** 30, 35, 40, 45, 50, 60cm  
-**Altos 2 puertas (70cm altura):** 70, 80, 90, 100, 120cm  
-
-**Total: 23 módulos**
-
-### Precios G06 de referencia (Venecia PET Blanco Mate):
-
-| Módulo | Precio G06 |
-|--------|-----------|
-| Bajo 1 puerta 30cm | 137,12 € |
-| Bajo 1 puerta 35cm | 148,13 € |
-| Bajo 1 puerta 40cm | 159,12 € |
-| Bajo 1 puerta 45cm | 170,14 € |
-| Bajo 1 puerta 50cm | 181,15 € |
-| Bajo 1 puerta 60cm | 203,17 € |
-| Bajo 1 puerta 80cm | 186,04 € |
-| Bajo 2 puertas 70cm | 258,72 € |
-| Bajo 2 puertas 80cm | 280,77 € |
-| Bajo 2 puertas 90cm | 302,77 € |
-| Bajo 2 puertas 100cm | 326,36 € |
-| Bajo 2 puertas 120cm | 370,40 € |
-| Alto 1 puerta 30cm | 145,97 € |
-| Alto 1 puerta 35cm | 151,53 € |
-| Alto 1 puerta 40cm | 156,48 € |
-| Alto 1 puerta 45cm | 161,53 € |
-| Alto 1 puerta 50cm | 166,87 € |
-| Alto 1 puerta 60cm | 198,57 € |
-| Alto 2 puertas 70cm | 194,79 € |
-| Alto 2 puertas 80cm | 208,57 € |
-| Alto 2 puertas 90cm | 222,36 € |
-| Alto 2 puertas 100cm | 237,67 € |
-| Alto 2 puertas 120cm | 265,23 € |
+- **Convención de medidas:** alto × ancho × fondo, en mm (formato de Logisiete), no cm.
 
 ## Estructura de fabricación (Logisiete)
 
@@ -124,10 +113,11 @@
 
 **Diseño y contenido web**
 1. ~~Home, catálogo y página de diseño 3D (boceto visual)~~ — hecho.
-2. Ficha de producto individual (detalle de módulo, selector de color/acabado, medidas).
-3. Pantalla de configuración final del checkout (Flat-pack vs. Montado, recargo).
-4. Página de accesorios (zócalos, costados, regletas) para venta cruzada.
-5. Textos legales: aviso legal, política de privacidad, cookies, condiciones generales de venta completas (forma de pago, exclusión de derecho de desistimiento, garantías legales de 2-3 años, jurisdicción).
+2. ~~Ficha de producto individual (detalle de módulo, selector de color/acabado, medidas)~~ — hecho.
+3. ~~Identidad visual definida y aplicada a las 4 páginas, con fotografía real~~ — hecho.
+4. Pantalla de configuración final del checkout (Paletizado vs. Armado de fábrica, recargo).
+5. Página de accesorios (zócalos, costados, regletas) para venta cruzada.
+6. Textos legales: aviso legal, política de privacidad, cookies, condiciones generales de venta completas (forma de pago, exclusión de derecho de desistimiento, garantías legales de 2-3 años, jurisdicción).
 
 **SEO**
 6. Investigación de palabras clave reales (ya se detectó que la gente busca "módulos de cocina" en vez de nombres de marca).
@@ -150,8 +140,8 @@
 
 **Parte técnica**
 19. Estructura del proyecto en GitHub (frontend + funciones Supabase separadas).
-20. ~~Base de datos en Supabase: tablas de módulos (con precio real del servidor), pedidos, clientes.~~ — Hecho (parcial: tabla modulos con 23 registros).
-21. ~~Catálogo y carrito (frontend) conectado a datos reales.~~ — Hecho (catálogo conectado a Supabase).
+20. Base de datos en Supabase: tablas de módulos (con precio real del servidor), pedidos, clientes.
+21. Catálogo y carrito (frontend) conectado a datos reales.
 22. Edge Function que recalcula el precio real (módulos + recargo 10% si aplica) y crea la sesión de pago en Stripe.
 23. Función que confirma el pago (webhook de Stripe) y guarda el pedido solo cuando el pago es real.
 24. Aviso automático a producción — envío del pedido a Logisiete (inicialmente puede ser un email automático).
@@ -160,26 +150,24 @@
 **Marketing / captación**
 26. Estrategia de primeros clientes — partiendo de cero en visibilidad, el canal B2B (contacto directo con paletas/lampistas) es más rápido que esperar a SEO/Ads.
 
-## Estado actual (21/08/2026)
+**Estado actual:** las 4 páginas (`index.html`, `catalogo.html`, `producto.html`, `diseno-3d.html`) están terminadas visualmente, con identidad unificada y fotografía real, publicadas en GitHub Pages. Base de datos Supabase creada, tabla `modulos` en construcción (pendiente rediseñar modelo de precios y confirmar tarifas reales de armado con Logisiete). El siguiente paso natural es conectar el catálogo a datos reales en vez de HTML escrito a mano.
 
-### ✅ Hecho hoy:
-- Añadida columna `precio_base` a la tabla `modulos`
-- Insertados 23 módulos con precios G06 (Venecia PET Blanco Mate)
-- Corregidos precios según catálogo G06
-- Añadidos módulos faltantes (35cm, 45cm, 70cm)
-- Conexión de `catalogo.html` a Supabase funcionando
-- Filtros reordenados: Tipo → Ancho → Acabado
-- Filtro de ancho con selección múltiple
-- Botón "Limpiar filtros de ancho"
-- Botón "Limpiar todos los filtros"
-- Ordenación por ancho o precio (asc/desc)
-- Enlaces a ficha de producto (`producto.html?id=...`)
-- Cambiado texto del descuento en `diseno-3d.html` (Opción 3)
+## ⚠️ Datos que aparecen en la web SIN verificar
 
-### 📋 Pendiente inmediato:
-- Conectar ficha de producto (`producto.html`) para mostrar datos reales
-- Seguir metiendo más módulos (columnas, semicolumnas, etc.)
-- Sistema de carrito
+Todo lo de esta lista está publicado pero no contrastado con Logisiete. Revisar antes de recibir tráfico real:
+
+- **Precios del catálogo y la ficha** (189€, 245€, 239€, 142€, 398€, 312€) — inventados durante los bocetos, no salen de tarifa ni de Supabase.
+- **Fondo de 58cm** en módulos bajos y **altura de 1900mm** en columna de horno — heredados de los bocetos.
+- **Umbral de 1.500€** para descontar el servicio de diseño 3D — cifra sin decidir, publicada en `diseno-3d.html`.
+- **Plazo de 7–10 días** de entrega del diseño 3D.
+
+## Errores de contenido ya corregidos (no reintroducir)
+
+- "Bajo 2 puertas 60cm" — **no existe**: hasta 60cm de ancho es 1 puerta; las 2 puertas empiezan en 70cm. Sustituido por "Bajo 1 puerta 60cm" y "Bajo 2 puertas 80cm".
+- Altura de módulos bajos de **82cm** → corregida a **80cm** en toda la web.
+- "El mismo estándar que usan las marcas de gama alta" → eliminada (comparación con competencia).
+- "+IVA · sin montaje" y "montar/montados" → sustituidos por "armar/armado de fábrica".
+- Venta cruzada que decía "que necesitarás para la instalación" → "para completar la composición".
 
 ## Notas para la IA
 
@@ -191,3 +179,6 @@
 - El código y las tablas de esta tienda van en un proyecto de GitHub/Supabase separado del de abrozon — nunca mezclar ambos.
 - La web se despliega en GitHub Pages (repo: github.com/jdanielhl1984-commits/cocinadirecta.com, público). Mismo patrón que abrozon: cuidado con caché y nombres de archivo al depurar errores.
 - **Antes de fijar cualquier cifra o regla de negocio como definitiva, verificar con datos reales de Logisiete** (presupuestos, tarifas) en vez de asumir fórmulas simples — ya ha pasado que una suposición razonable (10% fijo de recargo, luego 75€+14,93€/módulo) resultó no coincidir con los números reales de un pedido mixto. Preferir "pendiente de confirmar" a dar por buena una cifra sin contrastar.
+- **La IA no tiene acceso a GitHub ni a Supabase.** Prepara los archivos para descargar y guía paso a paso; el usuario hace la subida. Al indicar pasos de GitHub, nombrar los botones en inglés tal como aparecen (`Upload files`, `Commit changes`, `Add file`).
+- **Recomendado a futuro: GitHub Desktop**, para dejar de arrastrar archivos al navegador en cada cambio. Pendiente de instalar.
+- **Al rediseñar una página, comprobar antes qué se pierde.** Ya pasó una vez: la home nueva salió con todos los enlaces en `href="#"` y sin las secciones de Particulares/Profesionales, el diagrama Casco+Frente+Herrajes y el aviso de 60 días. Comparar siempre contra la versión anterior antes de dar por buena la nueva.

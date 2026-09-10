@@ -25,19 +25,19 @@
   img{display:block;width:100%;height:100%;object-fit:cover;}
   .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
 
-  /* ---------- NAV sobre la foto ---------- */
-  header{position:absolute;top:0;left:0;right:0;z-index:10;}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff;}
-  .logo{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.02em;text-shadow:0 1px 16px rgba(0,0,0,0.5);}
-  .logo em{font-style:normal;opacity:0.8;}
+  /* ---------- CABECERA (misma en todas las páginas) ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;}
+  .logo{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.02em;}
+  .logo em{font-style:normal;color:var(--brass);}
   .nav-links{display:flex;gap:34px;font-size:13px;}
-  .nav-links a{opacity:0.85;}
+  .nav-links a{opacity:0.65;}
   .nav-links a:hover{opacity:1;}
   .nav-right{display:flex;align-items:center;gap:20px;font-size:13px;}
-  .nav-right .cart{border:1px solid var(--line-light);padding:9px 18px;}
+  .nav-right .cart{border:1px solid var(--ink);padding:9px 18px;}
 
   /* ---------- HERO ---------- */
-  .hero{position:relative;height:88vh;min-height:600px;}
+  .hero{position:relative;height:80vh;min-height:540px;}
   .hero-img{position:absolute;inset:0;}
   .hero-shade{position:absolute;inset:0;background:linear-gradient(to top, rgba(16,15,13,0.92) 0%, rgba(16,15,13,0.78) 26%, rgba(16,15,13,0.42) 52%, rgba(16,15,13,0.34) 100%);}
   .hero-copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:60px;color:#fff;}
@@ -131,7 +131,7 @@
     .ref-row{grid-template-columns:1fr;gap:20px;}
     .ref-plus{display:none;}
     .nav-links{display:none;}
-    .hero{height:78vh;}
+    .hero{height:64vh;min-height:440px;}
     .logo{font-size:24px;}
   }
   @media (max-width:560px){
@@ -153,8 +153,8 @@
       <a href="diseno-3d.html">Diseño 3D</a>
     </nav>
     <div class="nav-right">
-      <a href="catalogo.html">Ver catálogo</a>
-      <a href="catalogo.html" class="cart">Carrito (0)</a>
+      <a href="#">Mi cuenta</a>
+      <a href="catalogo.html" class="cart">Ver catálogo</a>
     </div>
   </div>
 </header>
